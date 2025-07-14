@@ -12,7 +12,7 @@ class Speaker:
         self.lang_voice_map = self._build_lang_voice_map()
 
     def _build_lang_voice_map(self):
-        """构建语言到 voice.id 的映射"""
+        """build language to voice.id mapping"""
         lang_voice_map = {}
         for voice in self.voices:
             langs = voice.languages if voice.languages else []
