@@ -105,7 +105,7 @@ class UserProfileSystem:
             "gender": "",
             "age_group": "",
             "group_type": "",
-            "movie_genre": [],
+            "fav_genres": [],
             "favorite_actors": [],
             "favorite_directors": [],
             "location": "",
@@ -233,7 +233,7 @@ class UserProfileSystem:
             extracted_data = {
                 "age_group": frontend_data.get("ageRange", ""),
                 "gender": frontend_data.get("gender", ""),
-                "movie_genre": frontend_data.get("moviePreferences", []),
+                "fav_genres": frontend_data.get("moviePreferences", []),
                 "user_input": frontend_data.get("currentInput", "")  # 保留原始输入用于自然语言处理
             }
             
@@ -277,7 +277,7 @@ class UserProfileSystem:
         """
                 # 正向字段到负向字段的映射
         pos_to_neg_map = {
-            "movie_genre": "negative_genres",
+            "fav_genres": "negative_genres",
             "favorite_actors": "negative_actors",
             "favorite_directors": "negative_directors"
         }

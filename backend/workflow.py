@@ -70,7 +70,7 @@ tools_description = """
 Available tools:
 - get_route_info: Get navigation variables for frontend visualization, including coordinates, mode, API keys, etc. Parameters: {"origin": "origin address", "address": "destination address", "city": "city name (optional)", "mode": "Driving|Walking|Riding|Transfer|TruckDriving (optional)", ...other params}
 - get_film_cinema_schedule: Search for a movie by keyword and return the cinema schedule info for that movie in the specified city and date. Parameters: {"keyword": "movie name", "cityId": "city ID (default 40)", "showDate": "YYYY-MM-DD (optional)", "limit": "number of results (optional)","lng":"longitude of the origin address(optional)","lat":"latitude of the origin address"}
-- extract_and_recommend_movie: Extract user profile from user_input, selected_tags, frontend_data, then recommend or answer about movies. Parameters: {"user_input": "user's natural language input", "selected_tags": "user selected tags (optional)", "frontend_data": "frontend structured data (optional)"}
+- extract_and_recommend_movie: Extract user profile from user_input, selected_tags, frontend_data, then recommend or answer about movies. Parameters: {"user_input": "user's natural language input(string)", "frontend_data": "frontend structured data (optional)(dict)  such as {"ageRange": "18-24","gender": "female","moviePreferences": ["comedy", "romance", "thriller"],"currentInput":" current input (optional)"}"}
 """
 
 system_prompt = f"""
@@ -140,7 +140,7 @@ def run_tool(tool_name, parameters, llm_fallback=None):
 
         # 如果是 LangChain 的 BaseTool 类型
         if hasattr(tool, "invoke"):
-            return tool.invoke(parameters)
+            return tool.invoke({"input":"",**parameters})
 
         # 如果是 extract_and_recommend_movie（可能是函数也可能是 tool）
         if tool_name == "extract_and_recommend_movie":
@@ -178,18 +178,13 @@ def summarize_with_llm(user_input, tool_result, tool_name=None):
 def workflow(user_input, conversation_id=None):
     if isinstance(user_input, dict):
         user_input_str = json.dumps(user_input, ensure_ascii=False)
-    else:
-        user_input_str = user_input
-    logger.info(f"📩 用户输入: {user_input_str}")
-
-    if isinstance(user_input, dict):
-        user_input_str = user_input.get("currentInput", "")
         if not conversation_id:
             conversation_id = str(int(time.time()))
     else:
         user_input_str = user_input
         if not conversation_id:
             conversation_id = str(int(time.time()))
+    logger.info(f"📩 用户输入: {user_input_str}")        
     
     # 获取记忆对象
     memory = get_conversation_memory(conversation_id)
@@ -210,6 +205,7 @@ def workflow(user_input, conversation_id=None):
         logger.info(f"📤 系统响应: {final_answer}")
     else:
         try:
+            logger.info(f"调用工具: {tool_call['tool']}，传入的参数: {json.dumps(tool_call.get('parameters', {}), ensure_ascii=False)}")
             # 调用工具并获取结果
             tool_result = run_tool(
                 tool_call["tool"],
@@ -228,29 +224,34 @@ def workflow(user_input, conversation_id=None):
     
     return final_answer
 
-# FastAPI应用
+# 创建FastAPI应用
 app = FastAPI()
+
+# 配置CORS，允许前端跨域请求
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000"],  # 允许React前端地址
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# 定义API端点
 @app.post("/api/workflow")
 async def workflow_endpoint(request: Request):
     try:
-        data = await request.json()
+        data = await request.json()  # 获取前端发送的JSON数据
+        # 从请求中提取conversation_id，不存在则自动生成
         conversation_id = data.get("conversation_id") or str(int(time.time()))
+        # 调用原有workflow逻辑
         result = workflow(data, conversation_id=conversation_id)
-        return result
+        return result  # 返回结果包装为JSON
     except Exception as e:
         return {"error": str(e)}
 
 @app.get("/api/daily_recommendations")
 async def daily_recommendations(count: int = 6):
-    recommender = MovieRecommender(qwen_api_key="sk-41ec31f7dbc74f4b81a63f892bd528e4")
+    recommender = MovieRecommender(qwen_api_key="sk-41ec31f7dbc74f4b81a63f892bd528e4", user_id="tool_temp_user")
     movies = recommender.get_daily_recommendations(count=count)
     result = []
     for i, m in enumerate(movies):
@@ -265,9 +266,8 @@ async def daily_recommendations(count: int = 6):
             "poster_url":m.get('poster_url'),
             "tagline": m.get("tagline", "")
         })
-
     return result
-    
+
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)  # 启动API服务，监听8000端口

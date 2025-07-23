@@ -3,6 +3,8 @@ from Tool.user_interest_extract import extract_user_profile_from_input
 from Tool.agent import movie_agent_tool
 from dotenv import load_dotenv
 from Tool.user_interest_extract import UserProfileSystem
+import logging
+logger = logging.getLogger(__name__)  # 获取模块级别 logger
 import os
 load_dotenv()
 openai_api_key = os.getenv("DASHSCOPE_API_KEY")
@@ -23,6 +25,8 @@ def extract_and_recommend_movie(user_input: str = "", selected_tags: dict = None
     Returns:
         str: 推荐电影列表、电影详情或错误信息。
     """
+    logger.info("🎯 正在调用 extract_and_recommend_movie")
+    logger.info(f"📥 输入参数: user_input={user_input}, selected_tags={selected_tags}, frontend_data={frontend_data}, user_id={user_id}")
     # 优先使用已有用户画像（如果提供了user_id）
     user_profile = UserProfileSystem(user_id=user_id).get_full_profile() if user_id else None
 
