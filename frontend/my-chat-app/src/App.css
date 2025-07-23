@@ -494,7 +494,6 @@ html, body, #root {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  line-clamp:3;
 }
 .movie-footer {
   display: flex;
@@ -1135,6 +1134,10 @@ html, body, #root {
   color: var(--title-color);
 }
 
+.night .options-header h3 {
+  color: #fff;
+}
+
 .close-options {
   background: none;
   border: none;
@@ -1507,4 +1510,8 @@ html, body, #root {
   pointer-events: none !important;
   cursor: not-allowed !important;
   text-decoration: underline;
+}
+
+.night .theme-option {
+  color: #fff !important;
 }

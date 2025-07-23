@@ -1,0 +1,289 @@
+/* 登录注册界面样式 - 精准微调版 */
+.login-root {
+  font-family: 'Open Sans', sans-serif;
+  background: #f9ecd8; /* 比滑动框更浅的棕色 */
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 整体容器位置微调 */
+.login-root .container {
+  margin: auto;
+  width: 650px;
+  height: 650px;
+  position: relative;
+  margin-top: 150px; /* 整体下移60px */
+}
+
+.login-root .welcome {
+  background: #f6f6f6;
+  width: 650px;
+  height: 440px;
+  position: absolute;
+  top: 10%; /* 上移12% */
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 5px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-root .pinkbox {
+  position: absolute;
+  top: -10%;
+  left: 5%;
+  background: #f4d4b3;
+  width: 320px;
+  height: 520px;
+  border-radius: 5px;
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.15);
+  transition: all 0.5s ease-in-out;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-root .nodisplay {
+  display: none;
+  transition: all 0.5s ease;
+}
+
+.login-root .leftbox, .login-root .rightbox {
+  position: absolute;
+  width: 50%;
+  transition: 1s all ease;
+  padding: 60px 0 0 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.login-root .leftbox {
+  left: -2%;
+}
+
+.login-root .rightbox {
+  right: -2%;
+}
+
+.login-root h1 {
+  font-family: "Open Sans", sans-serif;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  color: #f6f6f6;
+  font-size: 2em;
+  letter-spacing: 8px;
+}
+
+.login-root .title {
+  font-family: "Lora", serif;
+  color: #7d91b4;
+  font-size: 1.8em;
+  line-height: 1.1em;
+  letter-spacing: 3px;
+  text-align: center;
+  font-weight: 300;
+  margin-top: -8%; /* 减少上边距 */
+  margin-bottom: 20px; /* 减少下边距 */
+}
+
+.login-root .desc {
+  margin-top: -8px;
+  margin-bottom: 10px; /* 减少下边距 */
+}
+
+.login-root .account {
+  margin-top: 35%; /* 减少上边距 */
+  font-size: 10px;
+  margin-bottom: 10px; /* 减少下边距 */
+}
+
+.login-root p {
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.7em;
+  letter-spacing: 2px;
+  color: #8e9aaf;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.login-root span {
+  color: rgb(228, 189, 144);
+}
+
+.login-root .flower {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  top: 43%; /* 上移 */
+  left: 27%;
+  opacity: 0.8;
+}
+
+.login-root .smaller {
+  width: 130px;
+  height: 130px;
+  top: 40%; /* 上移 */
+  left: 30%;
+  opacity: 0.9;
+}
+
+/* 按钮优化 */
+.login-root .button, .login-root .submit {
+  margin-top: 10px; /* 减少间距 */
+  margin-bottom: 6px;
+  background: #f6f6f6;
+  color: #a67c52;
+  border: solid 1px #ecce97;
+  padding: 10px 28px;
+  font-family: "Open Sans", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 13px;
+  border-radius: 15px;
+  outline: none;
+  display: block;
+  cursor: pointer;
+  transition: background-color 0.3s ease-out, color 0.3s, transform 0.2s;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 3px 6px rgba(206, 125, 136, 0.2);
+  font-weight: 600;
+}
+
+.login-root .button:hover, .login-root .submit:hover {
+  background: #ecd9c1;
+  color: #fffaf3;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 8px rgba(244, 193, 110, 0.3);
+}
+
+/* 粉框中的Login按钮样式统一 */
+.login-root .login-btn {
+  background: #f6f6f6;
+  color: #a67c52;
+  border: solid 1px #eac7cc;
+  padding: 10px 28px;
+  font-family: "Open Sans", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 13px;
+  border-radius: 15px;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease-out, color 0.3s, transform 0.2s;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 3px 6px rgba(206, 125, 136, 0.2);
+  font-weight: 600;
+  margin-top: 15px;
+}
+
+.login-root .login-btn:hover {
+  background: #ecd9c1;
+  color: #fffaf3;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 8px rgba(236, 217, 193, 0.3);
+}
+
+.login-root form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 7px;
+}
+
+.login-root .more-padding {
+  padding-top: 35px;
+}
+
+.login-root .more-padding input {
+  padding: 12px;
+}
+
+.login-root .more-padding .submit {
+  margin-top: 25px; /* 减少顶部间距 */
+}
+
+.login-root .login-input {
+  background: #f5d3b0;
+  color: #a67c52;
+  border: none;
+  border-bottom: 1px solid rgba(246, 246, 246, 0.5);
+  padding: 10px 9px 10px 9px;
+  font-weight: 100;
+  margin-bottom: 14px;
+  font-size: 1em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  transition: border 0.3s;
+}
+
+.login-root .login-input::placeholder {
+  color: #f6f6f6;
+  letter-spacing: 2px;
+  font-size: 1.0em;
+  font-weight: 100;
+}
+
+.login-root .login-input:focus {
+  color: #a67c52;
+  outline: none;
+  border-bottom: 1.2px solid #a67c52;
+  font-size: 1.0em;
+}
+
+.login-root .login-input:focus::placeholder {
+  opacity: 0;
+}
+
+.login-root label {
+  font-family: "Open Sans", sans-serif;
+  color: #a67c52;
+  font-size: 0.8em;
+  letter-spacing: 1px;
+}
+
+.login-root .checkbox {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  position: relative;
+  left: 0;
+  top: 0;
+  margin-bottom: 18px;
+  font-size: 1em;
+  justify-content: center;
+}
+
+.login-root .login-checkbox {
+  width: 15px;
+  background: #d2b48c;
+}
+
+.login-root .checkbox input[type=checkbox]:checked + label {
+  color: #a67c52;
+  transition: 0.5s all ease;
+}
+
+/* 响应式调整 */
+@media (max-width: 700px) {
+  .login-root .container {
+    transform: scale(0.85) translateY(-40px);
+  }
+}

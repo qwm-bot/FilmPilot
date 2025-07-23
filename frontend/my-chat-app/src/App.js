@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import AmapRouteBox from "./components/AmapRouteBox"; // 导入地图组件
+import Login from "./components/Login";
 
 function App() {
   const [showSidebar, setShowSidebar] = useState(true);
@@ -20,19 +21,20 @@ function App() {
   const [isRecommendationExpanded, setIsRecommendationExpanded] = useState(false);
   const [isThinking, setIsThinking] = useState(false); // 思考状态
   const [routeData, setRouteData] = useState(null); // 存储路线数据
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(() => localStorage.getItem('user_id') || '');
 
-  // 状态：年龄多数、性别和电影偏好
+  // 状态：年龄范围、性别和电影偏好
   const [selectedAgeRange, setSelectedAgeRange] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
   const [selectedMoviePreferences, setSelectedMoviePreferences] = useState([]);
 
-  // 新增：用户地理位置和权限询问状态
-  const [userLocation, setUserLocation] = useState(null);
-  const [locationPermissionAsked, setLocationPermissionAsked] = useState(false);
-
   // 1. 新增 recommendations 状态
   const [recommendations, setRecommendations] = useState([]);
 
+  // 新增：用户地理位置和权限询问状态
+  const [userLocation, setUserLocation] = useState(null);
+  const [locationPermissionAsked, setLocationPermissionAsked] = useState(false);
   // 新增：对话ID映射和自增ID
   const [conversationIdMap, setConversationIdMap] = useState({}); // name -> id
   const [nextConversationId, setNextConversationId] = useState(1); // 自增id
@@ -44,7 +46,7 @@ function App() {
   const ageRanges = ["18岁以下", "18-25", "26-35", "36-45", "45岁以上"];
   const genders = ["女", "男"];
   const movieGenres = ["剧情", "喜剧", "动作", "科幻", "爱情", "悬疑", "恐怖", "动画", "纪录片", "音乐剧"];
-
+  
   // 增强的Markdown格式化函数（修复换行和引号问题）
   const formatBotMessage = (text, isStreaming = false) => {
     if (!text) return null;
@@ -89,9 +91,9 @@ function App() {
         .replace(boldRegex, '<strong>$1</strong>')
         .replace(italicRegex, '<em>$1</em>');
       return (
-        <p
-          key={`p-${pIndex}`}
-          dangerouslySetInnerHTML={{ __html: htmlContent }}
+        <p 
+          key={`p-${pIndex}`} 
+          dangerouslySetInnerHTML={{ __html: htmlContent }} 
         />
       );
     });
@@ -105,21 +107,19 @@ function App() {
       setTheme(savedTheme);
       document.documentElement.className = savedTheme;
     }
-
+    
     // 读取聊天数据
     const savedData = localStorage.getItem('chatData');
     if (savedData) {
       try {
-        const { conversations: savedConvs, currentConv, messages, settings, conversationIdMap: savedIdMap, nextConversationId: savedNextId } = JSON.parse(savedData);
+        const { conversations: savedConvs, currentConv, messages, settings } = JSON.parse(savedData);
         setConversations(savedConvs || {});
         setCurrentConversation(currentConv);
         setCurrentMessages(messages || []);
         setSelectedAgeRange(settings?.ageRange || '');
         setSelectedGender(settings?.gender || '');
         setSelectedMoviePreferences(settings?.moviePrefs || []);
-        if (savedIdMap) setConversationIdMap(savedIdMap);
-        if (savedNextId) setNextConversationId(savedNextId);
-
+        
         // 如果有消息，进入聊天状态
         if (messages && messages.length > 0) {
           setAppState("chat");
@@ -128,7 +128,11 @@ function App() {
         console.error('Failed to parse saved data', e);
       }
     }
-
+    // 恢复输入框内容
+    const savedInput = localStorage.getItem('chatInputValue');
+    if (savedInput !== null) {
+      setInputValue(savedInput);
+    }
     // 响应式处理
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -138,7 +142,7 @@ function App() {
         setShowSidebar(false);
       }
     };
-
+    
     window.addEventListener('resize', handleResize);
     handleResize();
     return () => window.removeEventListener('resize', handleResize);
@@ -154,14 +158,17 @@ function App() {
         ageRange: selectedAgeRange,
         gender: selectedGender,
         moviePrefs: selectedMoviePreferences
-      },
-      conversationIdMap,
-      nextConversationId
+      }
     };
-
+    
     localStorage.setItem('chatData', JSON.stringify(dataToSave));
-  }, [conversations, currentConversation, currentMessages,
-      selectedAgeRange, selectedGender, selectedMoviePreferences, conversationIdMap, nextConversationId]);
+  }, [conversations, currentConversation, currentMessages, 
+      selectedAgeRange, selectedGender, selectedMoviePreferences]);
+
+  // 实时保存 inputValue 到 localStorage
+  useEffect(() => {
+    localStorage.setItem('chatInputValue', inputValue);
+  }, [inputValue]);
 
   // 保存主题设置
   useEffect(() => {
@@ -187,13 +194,13 @@ function App() {
   const simulateStreamResponse = (text, conversationName) => {
     let i = 0;
     setStreamingBotMsg("");
-
+    
     // 立即显示第一个字符，解决首字符显示问题
     if (text.length > 0) {
       setStreamingBotMsg(text[0]);
       i = 1;
     }
-
+    
     const interval = setInterval(() => {
       if (i < text.length) {
         setStreamingBotMsg(prev => prev + text[i]);
@@ -207,9 +214,9 @@ function App() {
           [conversationName]: {
             ...prev[conversationName],
             messages: [...prev[conversationName].messages, botMessage],
-            time: new Date().toLocaleString('zh-CN', {
-              year: 'numeric',
-              month: '2-digit',
+            time: new Date().toLocaleString('zh-CN', { 
+              year: 'numeric', 
+              month: '2-digit', 
               day: '2-digit',
               hour: '2-digit',
               minute: '2-digit'
@@ -221,22 +228,18 @@ function App() {
     }, 40);
   };
 
-  // 获取用户地理位置
   const getUserLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
           setUserLocation({ lat: latitude, lnt: longitude });
-          console.log('用户位置获取成功:', { lat: latitude, lnt: longitude });
         },
         (error) => {
-          console.error('获取位置失败:', error);
           setUserLocation({ lat: 38.988726, lnt: 117.346194 }); // 默认经纬度
         }
       );
     } else {
-      console.warn('浏览器不支持地理位置');
       setUserLocation({ lat: 38.988726, lnt: 117.346194 }); // 默认经纬度
     }
   };
@@ -256,6 +259,8 @@ function App() {
     }
 
     const createNewConv = () => {
+      const newId = nextConversationId;
+      setNextConversationId(id => id + 1);
       const newName = `对话 ${Object.keys(conversations).length + 1}`;
       const currentTime = new Date().toLocaleString('zh-CN', {
         year: 'numeric',
@@ -264,21 +269,16 @@ function App() {
         hour: '2-digit',
         minute: '2-digit'
       }).replace(',', '');
-
-      // 分配唯一数字id
-      const newId = nextConversationId;
-      setNextConversationId(id => id + 1);
       setConversationIdMap(prev => ({ ...prev, [newName]: newId }));
-
       const newConversation = {
         createdAt: currentTime,
         time: currentTime,
-        messages: []
+        messages: [],
+        conversation_id: newId
       };
-
       setConversations(prev => ({ ...prev, [newName]: newConversation }));
       setCurrentConversation(newName);
-      return { name: newName, id: newId }; // 返回新对话名和id
+      return { name: newName, id: newId };
     };
 
     let conversationName = currentConversation;
@@ -288,7 +288,7 @@ function App() {
       conversationName = name;
       conversationId = id;
     } else {
-      conversationId = conversationIdMap[conversationName] || null;
+      conversationId = conversationIdMap[conversationName] || (conversations[conversationName] && conversations[conversationName].conversation_id);
     }
 
     const newMessage = { role: "user", content: inputValue };
@@ -325,46 +325,34 @@ function App() {
           moviePreferences: selectedMoviePreferences,
           lat: userLocation ? userLocation.lat : 38.988726, // 默认纬度
           lnt: userLocation ? userLocation.lnt : 117.346194, // 默认经度
-          conversation_id: conversationId // 传递数字id
+          conversation_id: conversationId // 传递自增数字id
         }),
       });
-
-      if (!response.ok) {
-        throw new Error('API request failed');
-      }
-
+      if (!response.ok) throw new Error('API request failed');
       let data = await response.text();
-      // 递归解析 JSON 字符串
       function tryParseJSON(d) {
         try {
           const parsed = JSON.parse(d);
-          if (typeof parsed === 'string') {
-            return tryParseJSON(parsed);
-          }
+          if (typeof parsed === 'string') return tryParseJSON(parsed);
           return parsed;
-        } catch (e) {
-          return null;
-        }
+        } catch (e) { return null; }
       }
-      // 尝试解析为JSON，判断是否是路线数据
       const parsedData = tryParseJSON(data);
       if (parsedData && parsedData.map_action) {
-        // 是路线数据 - 转换为前端需要的格式
         const routeData = {
           origin: parsedData.origin || null,
           destination: parsedData.destination,
           city: parsedData.city,
           mode: parsedData.mode,
-          amapjs_key: "a64c3600e44f633e2af4fd8b0c8bb5eb", // 默认值
-          security_key: "57a82ef7ebde5553411673bc0ae7c6b2" // 默认值
+          amapjs_key: "a64c3600e44f633e2af4fd8b0c8bb5eb",
+          security_key: "57a82ef7ebde5553411673bc0ae7c6b2"
         };
         setIsThinking(false);
         setRouteData(routeData);
         return;
       }
-      // 普通文本处理
       data = data.replace(/^"/, '').replace(/"$/, '');
-      data = data.replace(/\\n/g, '\n');
+      data = data.replace(/\\n/g, '\n'); 
       setIsThinking(false);
       simulateStreamResponse(data, conversationName);
     } catch (error) {
@@ -377,9 +365,9 @@ function App() {
         [conversationName]: {
           ...prev[conversationName],
           messages: [...prev[conversationName].messages, errorMessage],
-          time: new Date().toLocaleString('zh-CN', {
-            year: 'numeric',
-            month: '2-digit',
+          time: new Date().toLocaleString('zh-CN', { 
+            year: 'numeric', 
+            month: '2-digit', 
             day: '2-digit',
             hour: '2-digit',
             minute: '2-digit'
@@ -389,35 +377,15 @@ function App() {
     }
   };
 
-  // 修改后的渲染消息内容函数
-  const renderMessageContent = (msg) => {
-    if (msg.mapData) {
-      return (
-        <AmapRouteBox
-          origin={msg.mapData.origin}
-          destination={msg.mapData.destination}
-          city={msg.mapData.city}
-          mode={msg.mapData.mode}
-          amapjs_key={msg.mapData.amapjs_key || "a64c3600e44f633e2af4fd8b0c8bb5eb"}
-          security_key={msg.mapData.security_key || "57a82ef7ebde5553411673bc0ae7c6b2"}
-        />
-      );
-    }
-    if (msg.role === 'bot') {
-      return formatBotMessage(msg.content);
-    }
-    return <p>{msg.content}</p>;
-  };
-
   // 当获取到路线数据时，添加到消息中
   useEffect(() => {
     if (routeData) {
-      const botMessage = {
-        role: "bot",
-        content: "已为您规划路线",
-        mapData: routeData
+      const botMessage = { 
+        role: "bot", 
+        content: "已为您规划路线", 
+        mapData: routeData 
       };
-
+      
       setCurrentMessages(msgs => [...msgs, botMessage]);
       setConversations(prev => {
         const updated = { ...prev };
@@ -425,9 +393,9 @@ function App() {
           updated[currentConversation] = {
             ...updated[currentConversation],
             messages: [...updated[currentConversation].messages, botMessage],
-            time: new Date().toLocaleString('zh-CN', {
-              year: 'numeric',
-              month: '2-digit',
+            time: new Date().toLocaleString('zh-CN', { 
+              year: 'numeric', 
+              month: '2-digit', 
               day: '2-digit',
               hour: '2-digit',
               minute: '2-digit'
@@ -436,7 +404,7 @@ function App() {
         }
         return updated;
       });
-
+      
       setRouteData(null);
     }
   }, [routeData, currentConversation]);
@@ -447,11 +415,11 @@ function App() {
     setInputValue("");
     setAppState("initial");
     setIsRecommendationExpanded(false);
-
+    
     if (isMobile) {
       setShowSidebar(false);
     }
-
+    
     setTimeout(() => {
       if (inputRef.current) {
         inputRef.current.focus();
@@ -531,19 +499,21 @@ function App() {
 
   // 页面加载时获取今日精选
   useEffect(() => {
-    fetch('http://localhost:8000/api/daily_recommendations?count=4')
-      .then(res => res.json())
-      .then(data => setRecommendations(Array.isArray(data) ? data : []))
-      .catch(err => {
-        setRecommendations([]);
-        console.error('获取今日精选失败:', err);
-      });
-  }, []);
+    if (isLoggedIn) {
+      fetch('http://localhost:8000/api/daily_recommendations?count=4')
+        .then(res => res.json())
+        .then(data => setRecommendations(Array.isArray(data) ? data : []))
+        .catch(err => {
+          setRecommendations([]);
+          console.error('获取今日精选失败:', err);
+        });
+    }
+  }, [isLoggedIn]);
 
   // 修改推荐栏切换函数：控制滚动和展开状态
   const toggleRecommendations = () => {
     setIsRecommendationExpanded(!isRecommendationExpanded);
-
+    
     // 展开时禁止背景滚动
     if (!isRecommendationExpanded) {
       document.body.style.overflow = 'hidden';
@@ -595,15 +565,15 @@ function App() {
   // 修改RecommendationBar组件：添加遮罩层
   const RecommendationBar = ({ isExpanded }) => (
     <>
-      <div
+      <div 
         className={`recommendation-bar ${isExpanded ? 'expanded' : ''}`}
         onClick={isExpanded ? undefined : toggleRecommendations}
       >
         <div className="bar-header">
           <h2 className="section-title">今日精选</h2>
           {isExpanded && (
-            <button
-              className="close-recommendations"
+            <button 
+              className="close-recommendations" 
               onClick={closeRecommendations}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -629,10 +599,10 @@ function App() {
           </div>
         )}
       </div>
-
+      
       {isExpanded && (
-        <div
-          className="recommendation-overlay visible"
+        <div 
+          className="recommendation-overlay visible" 
           onClick={closeRecommendations}
         />
       )}
@@ -652,6 +622,19 @@ function App() {
     }
   };
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUserId("");
+    localStorage.removeItem('user_id');
+    // 可选：清空聊天记录、推荐等
+    // setCurrentMessages([]);
+    // setConversations({});
+  };
+
+  if (!isLoggedIn) {
+    return <Login onLogin={() => setIsLoggedIn(true)} />;
+  }
+
   return (
     <div className={`chat-app ${theme}`}>
       {isMobile && !showSidebar && appState !== "expanded" && appState !== "chat" && (
@@ -663,10 +646,10 @@ function App() {
           </svg>
         </button>
       )}
-
-      <aside
+      
+      <aside 
         className={`sidebar ${showSidebar ? 'open' : ''} ${isMobile ? 'mobile' : ''}`}
-        style={!showSidebar && !isMobile ? { width: 0, padding: 0, overflow: 'hidden' } : {}}
+        style={!showSidebar && !isMobile ? { width: 0, padding: 0, overflow: 'hidden' } : { position: 'relative' }}
       >
         <div className="sidebar-header">
           <h2>聊天记录</h2>
@@ -685,12 +668,11 @@ function App() {
             </button>
           </div>
         </div>
-
-        <div className="conversations-list">
+        <div className="conversations-list" style={{ overflowY: 'auto', flex: 1, marginBottom: '80px' }}>
           {Object.keys(conversations).length > 0 ? (
             sortedConversations.map(([name, convo], idx) => (
-              <div
-                key={idx}
+              <div 
+                key={idx} 
                 className={`conversation-item ${currentConversation === name ? 'active' : ''}`}
                 onClick={() => loadConversation(name)}
               >
@@ -713,26 +695,26 @@ function App() {
                     <div className="conversation-name">{name}</div>
                   )}
                   <div className="conversation-preview">
-                    {convo.messages.length > 0
-                      ? convo.messages[convo.messages.length - 1].content.length > 25
+                    {convo.messages.length > 0 
+                      ? convo.messages[convo.messages.length - 1].content.length > 25 
                         ? `${convo.messages[convo.messages.length - 1].content.slice(0, 25)}...`
                         : convo.messages[convo.messages.length - 1].content
                       : "新对话"}
                   </div>
                   <div className="conversation-time">{convo.time}</div>
                 </div>
-
+                
                 <div className="conversation-actions">
-                  <button
-                    className="rename-conversation"
+                  <button 
+                    className="rename-conversation" 
                     onClick={(e) => renameConversation(name, e)}
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L7 20.5l-4 1 1-4L18.5 2.5z"></path>
                     </svg>
                   </button>
-                  <button
-                    className="delete-conversation"
+                  <button 
+                    className="delete-conversation" 
                     onClick={(e) => deleteConversation(name, e)}
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -749,8 +731,18 @@ function App() {
             </div>
           )}
         </div>
+        {/* 退出按钮：左下角，风格与 .age-option 一致，且不随 conversations-list 滚动 */}
+        <div style={{ width: '100%', position: 'absolute', bottom: 0, left: 0, padding: '28px 0 16px 0', background: 'transparent', display: 'flex', justifyContent: 'center', pointerEvents: 'auto' }}>
+          <button
+            className="save-settings logout-btn"
+            style={{ width: '80%', height: '48px', fontSize: '1.1rem', justifyContent: 'center', marginBottom: '0', lineHeight: '48px', padding: 0, textAlign: 'center', display: 'flex', alignItems: 'center' }}
+            onClick={handleLogout}
+          >
+            退出登录
+          </button>
+        </div>
       </aside>
-
+      
       {!showSidebar && (
         <button className="expand-sidebar" onClick={() => setShowSidebar(true)}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -758,19 +750,19 @@ function App() {
           </svg>
         </button>
       )}
-
+      
       {(appState === "initial" || appState === "expanded") && (
-        <div
-          className="initial-screen"
+        <div 
+          className="initial-screen" 
           ref={initialScreenRef}
           onClick={focusInput}
         >
           <div className="movie-art-content">
             <div className="glass-header">
-              <h1>电影艺术珍藏</h1>
+              <h1>FILM&PILOT</h1>
               <p className="subtitle">I know what you want</p>
             </div>
-
+            
             <div className="search-section">
               <div className="search-container">
                 <input
@@ -787,30 +779,30 @@ function App() {
                     }
                   }}
                 />
-                <button
-                  className="search-btn"
+                <button 
+                  className="search-btn" 
                   onClick={handleSend}
                 >
                   搜索
                 </button>
               </div>
             </div>
-
+            
             <RecommendationBar isExpanded={isRecommendationExpanded} />
           </div>
         </div>
       )}
-
+      
       {appState === "chat" && (
         <main className={`chat-container ${!showSidebar ? 'expanded' : ''}`}>
           <header className="chat-header">
             <div className="header-title">
-              <h1>电影对话助手</h1>
+              <h1>FilmPilot</h1>
               <div className="title-divider"></div>
             </div>
             <div className="header-controls">
-              <button
-                className="age-btn"
+              <button 
+                className="age-btn" 
                 onClick={() => setShowAgeSettings(!showAgeSettings)}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -818,9 +810,9 @@ function App() {
                   <path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"></path>
                 </svg>
               </button>
-
-              <button
-                className="test-btn"
+              
+              <button 
+                className="test-btn" 
                 onClick={() => setShowTestSettings(!showTestSettings)}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -831,29 +823,40 @@ function App() {
                   <polyline points="10 9 9 9 8 9"></polyline>
                 </svg>
               </button>
-
-              <button
-                className="options-btn"
+              
+              <button 
+                className="options-btn" 
                 onClick={() => setShowOptions(!showOptions)}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="12" cy="12" r="3"></circle>
-                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l-.06-.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                 </svg>
               </button>
             </div>
           </header>
-
+          
           <div className="messages-container" ref={messagesRef}>
             <div className="messages">
               {currentMessages.map((msg, idx) => (
                 <div key={idx} className={`message ${msg.role}`}>
                   <div className="message-content">
-                    {renderMessageContent(msg)}
+                    {msg.mapData ? (
+                      <AmapRouteBox 
+                        origin={msg.mapData.origin}
+                        destination={msg.mapData.destination}
+                        city={msg.mapData.city}
+                        mode={msg.mapData.mode}
+                        amapjs_key={msg.mapData.amapjs_key || "a64c3600e44f633e2af4fd8b0c8bb5eb"}
+                        security_key={msg.mapData.security_key || "57a82ef7ebde5553411673bc0ae7c6b2"}
+                      />
+                    ) : (
+                      msg.role === 'bot' ? formatBotMessage(msg.content) : <p>{msg.content}</p>
+                    )}
                   </div>
                 </div>
               ))}
-
+              
               {/* 思考中的动画 */}
               {isThinking && (
                 <div className="message bot">
@@ -866,7 +869,7 @@ function App() {
                   </div>
                 </div>
               )}
-
+              
               {/* 流式输出 */}
               {streamingBotMsg && (
                 <div className="message bot">
@@ -880,11 +883,11 @@ function App() {
                   </div>
                 </div>
               )}
-
+              
               <div ref={messagesEndRef} />
             </div>
           </div>
-
+          
           <div className="input-area bottom">
             <div className="input-container">
               <input
@@ -901,8 +904,8 @@ function App() {
                 placeholder="探索对话世界..."
                 className="message-input"
               />
-              <button
-                className="send-button"
+              <button 
+                className="send-button" 
                 onClick={handleSend}
               >
                 发送
@@ -911,7 +914,7 @@ function App() {
           </div>
         </main>
       )}
-
+      
       <aside className={`options-panel ${showOptions ? 'open' : ''}`}>
         <div className="options-header">
           <h3>主题设置</h3>
@@ -922,12 +925,12 @@ function App() {
             </svg>
           </button>
         </div>
-
+        
         <div className="options-content">
           <div className="option-section">
             <h4>主题设置</h4>
             <div className="theme-options">
-              <button
+              <button 
                 className={`theme-option ${theme === 'day' ? 'selected' : ''}`}
                 onClick={() => changeTheme('day')}
               >
@@ -946,8 +949,7 @@ function App() {
                 </div>
                 <span>日间模式</span>
               </button>
-
-              <button
+              <button 
                 className={`theme-option ${theme === 'night' ? 'selected' : ''}`}
                 onClick={() => changeTheme('night')}
               >
@@ -958,8 +960,7 @@ function App() {
                 </div>
                 <span>夜间模式</span>
               </button>
-
-              <button
+              <button 
                 className={`theme-option ${theme === 'eye' ? 'selected' : ''}`}
                 onClick={() => changeTheme('eye')}
               >
@@ -974,23 +975,10 @@ function App() {
               </button>
             </div>
           </div>
-
-          <div className="option-section">
-            <h4>其他设置</h4>
-            <div className="setting-item">
-              <label>消息气泡样式</label>
-              <select>
-                <option value="rounded">圆角风格</option>
-                <option value="square">方形风格</option>
-                <option value="modern">现代风格</option>
-              </select>
-            </div>
-          </div>
-
           <button className="save-settings" onClick={() => setShowOptions(false)}>保存设置</button>
         </div>
       </aside>
-
+      
       <aside className={`age-panel ${showAgeSettings ? 'open' : ''}`}>
         <div className="options-header">
           <h3>年龄与性别设置</h3>
@@ -1001,7 +989,7 @@ function App() {
             </svg>
           </button>
         </div>
-
+        
         <div className="options-content">
           <div className="option-section">
             <h4>年龄范围</h4>
@@ -1017,7 +1005,7 @@ function App() {
               ))}
             </div>
           </div>
-
+          
           <div className="option-section">
             <h4>性别设置</h4>
             <div className="age-options">
@@ -1032,11 +1020,11 @@ function App() {
               ))}
             </div>
           </div>
-
+          
           <button className="save-settings" onClick={() => saveSettings('age')}>保存设置</button>
         </div>
       </aside>
-
+      
       <aside className={`test-panel ${showTestSettings ? 'open' : ''}`}>
         <div className="options-header">
           <h3>偏好测试</h3>
@@ -1047,7 +1035,7 @@ function App() {
             </svg>
           </button>
         </div>
-
+        
         <div className="options-content">
           <div className="option-section">
             <h4>电影类型偏好</h4>
@@ -1069,19 +1057,19 @@ function App() {
               ))}
             </div>
           </div>
-
+          
           <button className="save-settings" onClick={() => saveSettings('test')}>完成测试</button>
         </div>
       </aside>
-
+      
       {appState === "chat" && isRecommendationExpanded && (
         <div className="recommendation-bar-container">
           <RecommendationBar isExpanded={true} />
         </div>
       )}
-
+      
       {appState === "chat" && !isRecommendationExpanded && (
-        <button
+        <button 
           className="show-recommendation-btn"
           onClick={toggleRecommendations}
         >

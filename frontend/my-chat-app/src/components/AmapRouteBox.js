@@ -270,7 +270,7 @@ export default function AmapRouteBox({
   }, [safeOrigin, destination, city, mode, amapjs_key, security_key]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+    <div style={{ display: 'flex', flexDirection: 'row', width: '100%',width:'40vw' }}>
     <div
       ref={mapRef}
       style={{
@@ -289,7 +289,8 @@ export default function AmapRouteBox({
         border: '1px solid #eee',
       }}
     />
-    </div>
+  </div>
+
 
   );
 }
