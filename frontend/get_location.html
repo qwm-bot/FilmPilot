@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>获取当前位置和城市信息</title>
+    <style type="text/css">
+    html, body, #container { width: 100%; height: 100%; }
+    #info {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: #fff;
+        padding: 10px;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        z-index: 100;
+    }
+    </style>
+    <script src="https://webapi.amap.com/maps?v=2.0&key=a64c3600e44f633e2af4fd8b0c8bb5eb"></script>
+</head>
+<body>
+<div id="container"></div>
+<div id="info">定位中...</div>
+<script type="text/javascript">
+    var map = new AMap.Map("container", {
+        resizeEnable: true,
+        zoom: 13
+    });
+
+    function getCurrentLocation(callback) {
+        map.plugin('AMap.Geolocation', function() {
+            var geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true,
+                timeout: 10000,
+                buttonPosition: 'RB',
+                zoomToAccuracy: true
+            });
+            map.addControl(geolocation);
+            geolocation.getCurrentPosition(function(status, result) {
+                if (status === 'complete') {
+                    var lng = result.position.lng;
+                    var lat = result.position.lat;
+                    var keyword = result.formattedAddress;
+                    var city = result.addressComponent.city || result.addressComponent.province;
+                    var info = {
+                        lng: lng,
+                        lat: lat,
+                        keyword: keyword,
+                        city: city,
+                        address: result.formattedAddress
+                    };
+                    callback && callback(info);
+                } else {
+                    document.getElementById('info').innerHTML = '定位失败: ' + result.message;
+                }
+            });
+        });
+    }
+
+    // 页面加载后自动定位并展示
+    getCurrentLocation(function(info) {
+        document.getElementById('info').innerHTML =
+            '<b>经纬度:</b> ' + info.lng + ', ' + info.lat + '<br>' +
+            '<b>城市:</b> ' + info.city + '<br>' +
+            '<b>详细地址:</b> ' + info.address;
+        map.setCenter([info.lng, info.lat]);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>影院路线规划</title>
+    <style type="text/css">
+    html, body, #container { width: 100%; height: 100%; }
+    #panel {
+        position: fixed;
+        background-color: white;
+        max-height: 90%;
+        overflow-y: auto;
+        top: 10px;
+        right: 10px;
+        width: 280px;
+    }
+    #panel .amap-call {
+        background-color: #009cf9;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+    #panel .amap-lib-driving {
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        overflow: hidden;
+    }
+    </style>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<div id="panel"></div>
+<script type="text/javascript">
+    // 参数化配置（可由前端动态赋值或后端渲染）
+    const mockData = {
+        origin: {keyword:null,city:null}, // 稍后用高德SDK定位赋值
+        destination: {keyword:"光明国际影城（滨江道店）",city:"天津"}, // 可由前端传入
+        city:"天津",
+        mode: 'Driving', // 可选: Driving, Walking, Riding, TruckDriving, Transfer
+        amapjs_key: 'a64c3600e44f633e2af4fd8b0c8bb5eb', // 替换为你的key，或由前端传入
+        security_key: '57a82ef7ebde5553411673bc0ae7c6b2' // 替换为你的安全码，或由前端传入
+    };
+
+    // 1. 配置安全密钥
+    window._AMapSecurityConfig = { securityJsCode: mockData.security_key };
+
+    // 2. 动态加载高德地图JS API（不带plugin参数）
+    function loadAmapScript(callback) {
+        var script = document.createElement('script');
+        script.src = 'https://webapi.amap.com/maps?v=2.0&key=' + mockData.amapjs_key;
+        script.onload = callback;
+        document.head.appendChild(script);
+    }
+
+    // 3. 用高德SDK定位当前位置
+    var map; // 声明为全局变量，供addToolbar.js访问
+    function initMapWithLocation() {
+        map = new AMap.Map("container", {
+            resizeEnable: true,
+            zoom: 13
+        });
+        map.plugin('AMap.Geolocation', function() {
+            var geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true,
+                timeout: 10000,
+                buttonPosition: 'RB',
+                buttonOffset: new AMap.Pixel(10, 20),
+                zoomToAccuracy: true
+            });
+            map.addControl(geolocation);
+            geolocation.getCurrentPosition(function(status, result) {
+                console.log('高德定位回调 status:', status);
+                console.log('高德定位回调 result:', result);
+                if (status === 'complete') {
+                    // 获取详细地址和城市名
+                    var keyword = result.formattedAddress;
+                    var city = result.addressComponent.city || result.addressComponent.province;
+                    mockData.origin = { keyword: keyword, city: city };
+                    console.log(mockData.origin);
+                    map.setCenter([result.position.lng, result.position.lat]);
+
+                    // 动态加载路线规划插件
+                    var pluginName = '';
+                    switch (mockData.mode) {
+                        case 'Driving': pluginName = 'AMap.Driving'; break;
+                        case 'Walking': pluginName = 'AMap.Walking'; break;
+                        case 'Riding': pluginName = 'AMap.Riding'; break;
+                        case 'TruckDriving': pluginName = 'AMap.TruckDriving'; break;
+                        case 'Transfer': pluginName = 'AMap.Transfer'; break;
+                        default: pluginName = 'AMap.Driving'; break;
+                    }
+                    console.log('准备加载路线规划插件:', pluginName);
+                    AMap.plugin(pluginName, function() {
+                        var planner;
+                        if (mockData.mode === 'Driving') {
+                            planner = new AMap.Driving({ map: map, panel: "panel" });
+                        } else if (mockData.mode === 'Walking') {
+                            planner = new AMap.Walking({ map: map, panel: "panel" });
+                        } else if (mockData.mode === 'Riding') {
+                            planner = new AMap.Riding({ map: map, panel: "panel" });
+                        } else if (mockData.mode === 'TruckDriving') {
+                            planner = new AMap.TruckDriving({ map: map, panel: "panel" });
+                        } else if (mockData.mode === 'Transfer') {
+                            planner = new AMap.Transfer({ map: map, panel: "panel" });
+                        }
+                        if (planner) {
+                            planner.search(mockData.origin, mockData.destination, function(status, result) {
+                                if (status === 'complete') {
+                                    log.success('绘制' + mockData.mode + '路线完成');
+                                } else {
+                                    log.error('获取路线数据失败：' + result);
+                                }
+                            });
+                        } else {
+                            log.error('未能正确实例化路线规划器，mode=' + mockData.mode);
+                        }
+                    });
+                } else {
+                    alert('定位失败: ' + result.message + '，将使用默认位置。');
+                    mockData.origin = {keyword: "南开大学津南校区", city: "天津"};
+                    map.setCenter([116.397428, 39.90923]);
+                    // 同样加载路线规划插件
+                    var pluginName = '';
+                    switch (mockData.mode) {
+                        case 'Driving': pluginName = 'AMap.Driving'; break;
+                        case 'Walking': pluginName = 'AMap.Walking'; break;
+                        case 'Riding': pluginName = 'AMap.Riding'; break;
+                        case 'TruckDriving': pluginName = 'AMap.TruckDriving'; break;
+                        case 'Transfer': pluginName = 'AMap.Transfer'; break;
+                        default: pluginName = 'AMap.Driving'; break;
+                    }
+                    console.log('定位失败后，准备加载路线规划插件:', pluginName);
+                    AMap.plugin(pluginName, function() {
+                        var planner;
+                        if (mockData.mode === 'Driving') {
+                            planner = new AMap.Driving({ map: map, panel: "panel" });
+                        } else if (mockData.mode === 'Walking') {
+                            planner = new AMap.Walking({ map: map, panel: "panel" });
+                        } else if (mockData.mode === 'Riding') {
+                            planner = new AMap.Riding({ map: map, panel: "panel" });
+                        } else if (mockData.mode === 'TruckDriving') {
+                            planner = new AMap.TruckDriving({ map: map, panel: "panel" });
+                        } else if (mockData.mode === 'Transfer') {
+                            planner = new AMap.Transfer({ map: map, panel: "panel" });
+                        }
+                        if (planner) {
+                            planner.search([mockData.origin, mockData.destination], function(status, result) {
+                                if (status === 'complete') {
+                                    log.success('绘制' + mockData.mode + '路线完成');
+                                } else {
+                                    log.error('获取路线数据失败：' + result);
+                                }
+                            });
+                        } else {
+                            log.error('未能正确实例化路线规划器，mode=' + mockData.mode);
+                        }
+                    });
+                }
+            });
+        });
+    }
+
+    // 启动流程
+    loadAmapScript(initMapWithLocation);
+</script>
+</body>
+</html>
