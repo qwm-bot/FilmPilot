@@ -2,6 +2,7 @@ import requests
 from langchain_core.tools import tool
 from dotenv import load_dotenv
 import os
+
 load_dotenv()
 amap_key = os.getenv("AMAP_API_KEY")
 amapjs_key = os.getenv("AMAPJS_API_KEY")
@@ -13,6 +14,7 @@ MODE_API_URL = {
     "electrobike": "https://restapi.amap.com/v5/direction/electrobike",
     "transit": "https://restapi.amap.com/v5/direction/transit/integrated"
 }
+
 
 # @tool(description="Get the longitude and latitude coordinates of a given address (address) and optional city name (city), return a float list [longitude, latitude].")
 def get_location_by_address(address, city=40):
@@ -38,8 +40,10 @@ def get_location_by_address(address, city=40):
         return [float(lng), float(lat)]
     else:
         return None
-    
-@tool(description="Get route planning information for various transportation modes (driving, walking, cycling, etc.) based on the starting point coordinates (origin), destination address (address), city (city), mode of transportation (mode), and return a dictionary containing route, distance, estimated time, etc.")
+
+
+@tool(
+    description="Get route planning information for various transportation modes (driving, walking, cycling, etc.) based on the starting point coordinates (origin), destination address (address), city (city), mode of transportation (mode), and return a dictionary containing route, distance, estimated time, etc.")
 def get_route(origin, address, city=40, mode="driving", isindoor=True, **kwargs):
     """
     Backend non-visual route planning: Get routes for various transportation modes based on starting point coordinates and destination address.
@@ -57,7 +61,7 @@ def get_route(origin, address, city=40, mode="driving", isindoor=True, **kwargs)
     """
     url = MODE_API_URL.get(mode)
     # Use .invoke to call the tool
-    destination_coords = get_location_by_address(address, city)
+    destination_coords = get_location_by_address.invoke({"address": address, "city": city})
     if not url:
         raise ValueError(f"Unsupported mode of transportation: {mode}")
     # Format destination as 'lng,lat' string if needed
@@ -65,14 +69,14 @@ def get_route(origin, address, city=40, mode="driving", isindoor=True, **kwargs)
         destination = f"{destination_coords[0]},{destination_coords[1]}"
     else:
         destination = destination_coords
-    if mode=="bicycling":
+    if mode == "bicycling":
         params = {
             "origin": origin,
             "destination": destination,
             "key": amap_key,
-            "isindoor" : isindoor
+            "isindoor": isindoor
         }
-    else :
+    else:
         params = {
             "origin": origin,
             "destination": destination,
@@ -102,8 +106,9 @@ def test_get_route():
     except Exception as e:
         print(f"Test failed: {e}")
 
+
 # @tool(description="Return navigation variables required for frontend visualization based on origin, destination address, city, mode of transportation, etc., including origin and destination coordinates, mode, API key, security key, etc. Suitable for frontend-backend separation scenarios.")
-def get_route_info(address, city="天津", mode="Driving", origin=None):
+def get_route_info(address, city="天津", mode="Driving", origin=None, **kwargs):
     """
     Get navigation variable information required for frontend visualization, for frontend to dynamically load AMap JS API and perform route visualization.
 
@@ -133,12 +138,13 @@ def get_route_info(address, city="天津", mode="Driving", origin=None):
     else:
         origin_obj = {"keyword": origin, "city": city}
     return {
-        "map_action":True,
+        "map_action": True,
         "destination": destination,
         "origin": origin_obj,
         "city": city,
-        "mode": mode
+        "mode": mode,
     }
 
+
 if __name__ == "__main__":
-    print(get_route_info(origin="天津西站",address="南开大学津南校区"))
+    test_get_route()

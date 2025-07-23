@@ -18,6 +18,7 @@ from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
 
+
 # 用户画像表模型
 class UserProfileDB(Base):
     __tablename__ = 'user_profiles'
@@ -26,12 +27,14 @@ class UserProfileDB(Base):
     last_updated = Column(DateTime)
     password = Column(String(128), default="")  # 新增密码字段
 
+
 class UserProfileSystem:
     """
     用户画像系统
     """
 
-    def __init__(self, user_id: str = "default", mysql_url: str = "mysql+pymysql://root:123456@localhost:3306/movie_recommendation"):
+    def __init__(self, user_id: str = "default",
+                 mysql_url: str = "mysql+pymysql://root:123456@localhost:3306/movie_recommendation"):
         self.user_id = user_id
         self.mysql_url = mysql_url
         # 初始化MySQL连接
@@ -85,13 +88,13 @@ class UserProfileSystem:
 
         # 构建处理链
         self.chain = (
-            RunnablePassthrough.assign(
-                chat_history=lambda x: self.memory.load_memory_variables(x)["chat_history"],
-                selected_tags=lambda x: json.dumps(x.get("selected_tags", {}), ensure_ascii=False)
-            )
-            | self.extraction_prompt
-            | self._call_llm
-            | StrOutputParser()
+                RunnablePassthrough.assign(
+                    chat_history=lambda x: self.memory.load_memory_variables(x)["chat_history"],
+                    selected_tags=lambda x: json.dumps(x.get("selected_tags", {}), ensure_ascii=False)
+                )
+                | self.extraction_prompt
+                | self._call_llm
+                | StrOutputParser()
         )
 
         # 初始化基础画像
@@ -114,10 +117,8 @@ class UserProfileSystem:
             "negative_actors": [],
             "negative_directors": [],
             "last_updated": datetime.now().isoformat()
-            #"version": "1.0"  # 新增版本控制
+            # "version": "1.0"  # 新增版本控制
         }
-
-
 
     def _load_profile(self):
         """从MySQL加载用户画像"""
@@ -144,11 +145,11 @@ class UserProfileSystem:
         for genre in self.base_profile["negative_genres"]:
             if genre in self.base_profile["movie_genre"]:
                 self.base_profile["movie_genre"].remove(genre)
-        
+
         for actor in self.base_profile["negative_actors"]:
             if actor in self.base_profile["favorite_actors"]:
                 self.base_profile["favorite_actors"].remove(actor)
-        
+
         for director in self.base_profile["negative_directors"]:
             if director in self.base_profile["favorite_directors"]:
                 self.base_profile["favorite_directors"].remove(director)
@@ -215,18 +216,18 @@ class UserProfileSystem:
                 return data
         except:
             pass
-        
+
         # 尝试提取JSON部分
         cleaned = re.sub(r'^.*?(\{.*\}).*?$', r'\1', text, flags=re.DOTALL)
         cleaned = cleaned.replace("```json", "").replace("```", "").strip()
-        
+
         try:
             return json.loads(cleaned)
         except:
             return {}
 
     def process_input(self, user_input: str = "", selected_tags: Optional[Dict] = None,
-                 frontend_data: Optional[Dict] = None) -> Dict[str, Any]:
+                      frontend_data: Optional[Dict] = None) -> Dict[str, Any]:
         """处理用户输入并严格更新画像"""
         if frontend_data:
             # 从按钮标签获取确定数据
@@ -236,7 +237,7 @@ class UserProfileSystem:
                 "fav_genres": frontend_data.get("moviePreferences", []),
                 "user_input": frontend_data.get("currentInput", "")  # 保留原始输入用于自然语言处理
             }
-            
+
             # 从自然语言输入中提取其他信息
             if extracted_data["user_input"]:
                 result = self.chain.invoke({
@@ -244,7 +245,7 @@ class UserProfileSystem:
                     "selected_tags": selected_tags or {}
                 })
                 nl_extracted = self.clean_json_response(result)
-                
+
                 # 合并自然语言提取的数据（但保留标签数据的优先级）
                 for key in nl_extracted:
                     if key not in extracted_data or not extracted_data[key]:
@@ -256,14 +257,14 @@ class UserProfileSystem:
                 "selected_tags": selected_tags or {}
             })
             extracted_data = self.clean_json_response(result)
-        
+
         if extracted_data:
             input_content = user_input if not frontend_data else str(frontend_data)
             self.memory.save_context(
                 {"input": input_content},
                 {"output": json.dumps(extracted_data, ensure_ascii=False)}
             )
-            
+
             self._strict_merge(extracted_data)
             self.save_profile()
 
@@ -275,7 +276,7 @@ class UserProfileSystem:
         1. 新喜欢的内容从negative_列表中移除
         2. 新不喜欢的内容从正面列表中移除
         """
-                # 正向字段到负向字段的映射
+        # 正向字段到负向字段的映射
         pos_to_neg_map = {
             "fav_genres": "negative_genres",
             "favorite_actors": "negative_actors",
@@ -297,12 +298,11 @@ class UserProfileSystem:
                     if item in self.base_profile[pos_key]:
                         self.base_profile[pos_key].remove(item)
 
-        
         # 合并所有更新
         for key, value in update.items():
             if key not in self.base_profile:
                 continue
-                
+
             if isinstance(self.base_profile[key], list):
                 if isinstance(value, list):
                     # 合并并去重
@@ -311,7 +311,7 @@ class UserProfileSystem:
                     self.base_profile[key].append(value)
             elif value:
                 self.base_profile[key] = value
-        
+
         # 更新最后修改时间
         self.base_profile["last_updated"] = datetime.now().isoformat()
 
@@ -319,7 +319,7 @@ class UserProfileSystem:
         """获取当前完整且无冲突的用户画像"""
         # 深拷贝基础画像
         full_profile = copy.deepcopy(self.base_profile)
-        
+
         # 合并当前会话的更新
         for msg in self.memory.chat_memory.messages:
             if msg.type == "ai":
@@ -328,7 +328,7 @@ class UserProfileSystem:
                     self._strict_merge(update)
                 except:
                     continue
-        
+
         # 最终清理
         self._clean_profile()
         return full_profile
@@ -337,7 +337,9 @@ class UserProfileSystem:
         """重置当前会话"""
         self.memory.clear()
 
-def extract_user_profile_from_input(user_input: str = "", selected_tags: Optional[Dict] = None, frontend_data: Optional[Dict] = None) -> Dict[str, Any]:
+
+def extract_user_profile_from_input(user_input: str = "", selected_tags: Optional[Dict] = None,
+                                    frontend_data: Optional[Dict] = None) -> Dict[str, Any]:
     """
     从用户输入、标签和前端数据中提取用户画像信息。
 
@@ -352,10 +354,11 @@ def extract_user_profile_from_input(user_input: str = "", selected_tags: Optiona
     system = UserProfileSystem("tool_temp_user")
     return system.process_input(user_input=user_input, selected_tags=selected_tags, frontend_data=frontend_data)
 
+
 # 测试用例
 if __name__ == "__main__":
     system = UserProfileSystem("小a")
-    
+
     # 测试前端数据输入
     frontend_data = {
         "currentInput": "我明天想和朋友去看电影",
@@ -364,10 +367,10 @@ if __name__ == "__main__":
         "moviePreferences": ["爱情"]
     }
     updates = system.process_input(frontend_data=frontend_data)
-    
+
     print("\n完整画像:")
     full_profile = system.get_full_profile()
     cleaned = {k: v for k, v in full_profile.items() if v not in ["", [], None]}
     pprint(cleaned, width=120, indent=2)
-    
+
     system.save_profile()

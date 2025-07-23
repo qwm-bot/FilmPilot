@@ -1,4 +1,3 @@
-
 import json
 import re
 import requests
@@ -6,14 +5,14 @@ import logging
 from datetime import datetime
 from openai import OpenAI
 import random
-from Tool.user_interest_extract import UserProfileSystem
 
 # 配置日志
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+
 class MovieRecommender:
     """电影推荐系统核心功能"""
-    
+
     # API密钥配置
     # QWEN_API_KEY = "sk-41ec31f7dbc74f4b81a63f892bd528e4"
     TMDB_API_KEY = "530ae9f18a5985f155a45682ad27311e"
@@ -39,17 +38,17 @@ class MovieRecommender:
         "动作": 28, "冒险": 12, "动画": 16, "喜剧": 35, "犯罪": 80,
         "剧情": 18, "家庭": 10751, "奇幻": 14, "恐怖": 27, "爱情": 10749,
         "科幻": 878, "惊悚": 53, "战争": 10752, "西方": 37,
-        
+
         # 扩展类型
         "悬疑": 9648, "音乐": 10402, "歌舞": 10402, "历史": 36,
         "纪录片": 99, "传记": 99, "运动": 10770, "奇幻冒险": 14,
         "灾难": 10752, "武侠": 28, "黑色电影": 10752,
-        
+
         # 细分类型（映射到主要类型）
         "恐怖喜剧": 27, "科幻恐怖": 878, "浪漫喜剧": 10749,
         "动作喜剧": 28, "犯罪惊悚": 80, "政治惊悚": 53,
         "奇幻爱情": 14, "科幻动作": 878, "青春成长": 18,
-        
+
         # 中国特色类型
         "武侠": 28, "古装": 36, "宫廷": 36, "谍战": 53,
         "警匪": 80, "革命": 10752, "都市": 18
@@ -58,26 +57,26 @@ class MovieRecommender:
     # 情感关键词映射
     EMOTION_MAP = {
         # 积极情感
-        "浪漫": "romance", "温馨": "heartwarming", "治愈": "feel-good", 
+        "浪漫": "romance", "温馨": "heartwarming", "治愈": "feel-good",
         "轻松": "lighthearted", "搞笑": "funny", "欢乐": "joyful",
         "甜蜜": "sweet", "温暖": "warm", "励志": "inspirational",
         "感动": "touching", "愉悦": "uplifting", "梦幻": "dreamy",
-        
+
         # 中性/复杂情感
         "烧脑": "mind-bending", "悬疑": "suspenseful", "惊险": "thrilling",
         "震撼": "mind-blowing", "史诗": "epic", "深沉": "profound",
         "艺术": "artistic", "深刻": "thought-provoking", "怀旧": "nostalgic",
-        
+
         # 消极情感
         "悲伤": "sad", "恐怖": "horror", "惊悚": "thriller",
         "黑暗": "dark", "压抑": "oppressive", "暴力": "violent",
         "惊悚": "thrilling", "刺激": "intense", "悬疑": "mysterious",
-        
+
         # 特定氛围
         "奇幻": "fantasy", "科幻": "sci-fi", "动作": "action-packed",
         "冒险": "adventure", "音乐": "musical", "歌舞": "musical",
         "家庭": "family", "成长": "coming-of-age", "历史": "historical",
-        
+
         # 关系类型
         "爱情": "romantic", "友情": "friendship", "亲情": "family",
         "兄弟情": "bromance", "闺蜜情": "sisterhood"
@@ -97,7 +96,7 @@ class MovieRecommender:
         "机器人": "robot",
         "魔法": "magic",
         "神话": "mythology",
-        
+
         # 情节类型
         "复仇": "revenge",
         "救赎": "redemption",
@@ -107,14 +106,14 @@ class MovieRecommender:
         "寻宝": "treasure hunt",
         "侦探": "detective",
         "卧底": "undercover",
-        
+
         # 人物关系
         "父子": "father-son relationship",
         "母女": "mother-daughter relationship",
         "师生": "teacher-student relationship",
         "竞争对手": "rivalry",
         "三角恋": "love triangle",
-        
+
         # 场景/氛围
         "太空": "space",
         "海洋": "ocean",
@@ -134,15 +133,14 @@ class MovieRecommender:
         "fav_genres": []
     }
 
-    def __init__(self, user_id,user_profile=None, qwen_api_key=None,mysql_url: str = "mysql+pymysql://root:123456@localhost:3306/movie_recommendation"):
+    def __init__(self, user_profile=None, qwen_api_key=None):
         """初始化推荐系统"""
-        user_profile = UserProfileSystem(user_id=user_id, mysql_url=mysql_url).get_full_profile()
         self.user_profile = user_profile or self.DEFAULT_USER_PROFILE.copy()
         self.openai_client = OpenAI(
-            api_key= qwen_api_key,
-            base_url="https://dashscope.aliyuncs.com/compatible-mode/v1" # Qwen OpenAI兼容API地址
+            api_key=qwen_api_key,
+            base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"  # Qwen OpenAI兼容API地址
         )
-    
+
     def parse_user_intent(self, user_input):
         """解析用户意图（支持时间/导演/演员/情感/类型/主题筛选）"""
         try:
@@ -172,7 +170,7 @@ class MovieRecommender:
     - "90年代" → "1990-01-01,1999-12-31"
     5. 只输出纯JSON格式，不要添加任何解释
     """
-            
+
             response = self.openai_client.chat.completions.create(
                 model="qwen-plus",
                 messages=[
@@ -183,20 +181,20 @@ class MovieRecommender:
                 max_tokens=500,
                 response_format={"type": "json_object"}
             )
-            
+
             raw_content = response.choices[0].message.content.strip()
             logging.info(f"原始解析输出: {raw_content}")
-            
+
             # 清理输出
             clean_content = re.sub(r'```json|\```', '', raw_content).strip()
             clean_content = clean_content.replace("'", '"')
-            
+
             try:
                 tags = json.loads(clean_content)
             except json.JSONDecodeError:
                 logging.warning("JSON解析失败，使用回退策略")
                 tags = {"emotion": [], "genres": [], "keywords": [], "exclude": []}
-            
+
             # ==== 手动提取补充信息 ====
             # 1. 时间范围检测
             if "time_range" not in tags or not tags["time_range"]:
@@ -218,9 +216,10 @@ class MovieRecommender:
                         if match:
                             decade = match.group(1)
                             tags["time_range"] = f"{decade}0-01-01,{decade}9-12-31"
-            
+
             # 2. 导演检测
-            if ("directors" not in tags or not tags["directors"]) and re.search(r"导演[：:]\s*([\u4e00-\u9fa5a-zA-Z\s·]+)", user_input):
+            if ("directors" not in tags or not tags["directors"]) and re.search(
+                    r"导演[：:]\s*([\u4e00-\u9fa5a-zA-Z\s·]+)", user_input):
                 director_match = re.search(r"导演[：:]\s*([\u4e00-\u9fa5a-zA-Z\s·]+)", user_input)
                 directors = [d.strip() for d in re.split(r'[,，]', director_match.group(1))]
                 # 翻译中文名导演
@@ -233,9 +232,10 @@ class MovieRecommender:
                     else:
                         translated_directors.append(name)
                 tags["directors"] = translated_directors
-            
+
             # 3. 演员检测
-            if ("actors" not in tags or not tags["actors"]) and re.search(r"(主演|演员)[：:]\s*([\u4e00-\u9fa5a-zA-Z\s·]+)", user_input):
+            if ("actors" not in tags or not tags["actors"]) and re.search(
+                    r"(主演|演员)[：:]\s*([\u4e00-\u9fa5a-zA-Z\s·]+)", user_input):
                 actor_match = re.search(r"(主演|演员)[：:]\s*([\u4e00-\u9fa5a-zA-Z\s·]+)", user_input)
                 actors = [a.strip() for a in re.split(r'[,，]', actor_match.group(2))]
                 # 翻译中文名演员
@@ -248,52 +248,52 @@ class MovieRecommender:
                     else:
                         translated_actors.append(name)
                 tags["actors"] = translated_actors
-            
+
             # ==== 关键词提取增强 ====
             # 1. 情感关键词提取
             emotion_keywords = []
             for emotion in self.EMOTION_MAP:
                 if emotion in user_input and emotion not in emotion_keywords:
                     emotion_keywords.append(emotion)
-            
+
             # 合并模型输出和手动提取的情感关键词
             if emotion_keywords:
                 tags["emotion"] = list(set(tags.get("emotion", []) + emotion_keywords))
-            
+
             # 2. 电影类型提取
             genre_keywords = []
             for genre in self.GENRE_MAP:
                 if genre in user_input and genre not in genre_keywords:
                     genre_keywords.append(genre)
-            
+
             # 合并模型输出和手动提取的类型关键词
             if genre_keywords:
                 tags["genres"] = list(set(tags.get("genres", []) + genre_keywords))
-            
+
             # 3. 主题关键词提取
             keyword_keywords = []
             for keyword in self.KEYWORD_CATEGORY_MAP:
                 if keyword in user_input and keyword not in keyword_keywords:
                     keyword_keywords.append(keyword)
-            
+
             # 合并模型输出和手动提取的主题关键词
             if keyword_keywords:
                 tags["keywords"] = list(set(tags.get("keywords", []) + keyword_keywords))
-            
+
             # 4. 排除元素检测
             exclude_keywords = []
             for exclude in ["恐怖", "暴力", "血腥", "惊悚", "悲伤", "压抑"]:
                 if exclude in user_input and exclude not in exclude_keywords:
                     exclude_keywords.append(exclude)
-            
+
             if exclude_keywords:
                 tags["exclude"] = list(set(tags.get("exclude", []) + exclude_keywords))
-            
+
             tags = self.sort_keywords_by_priority(tags)
             logging.info(f"排序后的推荐标签: {tags}")
-            
+
             return tags
-                    
+
         except Exception as e:
             logging.error(f"需求解析失败: {str(e)}")
             # 最简回退策略
@@ -307,7 +307,7 @@ class MovieRecommender:
     def sort_keywords_by_priority(self, tags):
         """按优先级对关键词进行排序"""
         sorted_tags = {}
-        
+
         # 按优先级从高到低排序
         for key in sorted(tags.keys(), key=lambda k: self.KEYWORD_PRIORITY_MAP.get(k, 5)):
             if isinstance(tags[key], list):
@@ -315,27 +315,27 @@ class MovieRecommender:
                 sorted_tags[key] = self.sort_keyword_list(key, tags[key])
             else:
                 sorted_tags[key] = tags[key]
-        
+
         return sorted_tags
-    
+
     def sort_keyword_list(self, key_type, keyword_list):
         """根据关键词类型进行具体排序"""
         # 导演/演员按出现顺序保持原样
         if key_type in ["directors", "actors"]:
             return keyword_list
-        
+
         # 情感关键词不再排序 - 保持原样
         if key_type == "emotion":
             return keyword_list  # 不再对情感关键词排序
-        
+
         # 类型关键词排序（主要类型>扩展类型>细分类型）
         if key_type == "genres":
-            genre_order = ["动作", "冒险", "动画", "喜剧", "犯罪", "剧情", "家庭", 
-                         "奇幻", "恐怖", "爱情", "科幻", "惊悚", "战争", "西方",
-                         "悬疑", "音乐", "历史", "纪录片", "传记", "运动",
-                         "恐怖喜剧", "科幻恐怖", "浪漫喜剧", "动作喜剧", "犯罪惊悚"]
+            genre_order = ["动作", "冒险", "动画", "喜剧", "犯罪", "剧情", "家庭",
+                           "奇幻", "恐怖", "爱情", "科幻", "惊悚", "战争", "西方",
+                           "悬疑", "音乐", "历史", "纪录片", "传记", "运动",
+                           "恐怖喜剧", "科幻恐怖", "浪漫喜剧", "动作喜剧", "犯罪惊悚"]
             return sorted(keyword_list, key=lambda x: genre_order.index(x) if x in genre_order else len(genre_order))
-        
+
         # 其他关键词保持原样
         return keyword_list
 
@@ -343,23 +343,22 @@ class MovieRecommender:
         """带智能回退的TMDB参数映射（根据优先级舍弃关键词）"""
         # 创建可修改的标签副本
         current_tags = tags.copy()
-        
-        
+
         # 回退策略：根据尝试次数舍弃低优先级关键词
         if attempt == 2:  # 第一次回退
             # 移除优先级最低的2个元素（时间范围+1个低优先级关键词）
             self.remove_low_priority_items(current_tags, count=2)
             logging.info(f"回退策略1: 移除最低优先级元素, 当前标签: {current_tags}")
-        
+
         elif attempt == 3:  # 第二次回退
             # 移除优先级最低的3个元素
             self.remove_low_priority_items(current_tags, count=3)
             logging.info(f"回退策略2: 移除低优先级元素, 当前标签: {current_tags}")
-            
+
             # 确保至少保留一个核心类型
             if not current_tags.get("genres"):
                 current_tags["genres"] = ["剧情"]  # 默认核心类型
-        
+
         # 使用更新后的标签生成参数
         return self.generate_tmdb_params_from_tags(current_tags)
 
@@ -374,21 +373,21 @@ class MovieRecommender:
             elif value:  # 处理非列表类型的值（如time_range）
                 priority = self.KEYWORD_PRIORITY_MAP.get(key, 5)
                 all_items.append((key, value, priority))
-        
+
         # 按优先级从低到高排序（优先级数值越大，优先级越低）
         sorted_items = sorted(all_items, key=lambda x: (-x[2], x[0]))
-        
+
         # 移除最低优先级的count个元素
         removed_count = 0
         for key, value, _ in sorted_items:
             if removed_count >= count:
                 break
-                
+
             # 移除整个键值对
             if key in tags:
                 del tags[key]
                 removed_count += 1
-    
+
     def generate_tmdb_params_from_tags(self, tags):
         """从标签生成TMDB参数（核心参数映射）"""
         params = {
@@ -397,14 +396,14 @@ class MovieRecommender:
             "include_adult": "false",
             "language": "zh-CN"  # 添加中文支持
         }
-        
+
         # ===== 处理影片类型 =====
         if "genres" in tags and isinstance(tags["genres"], list):
             valid_genres = [str(self.GENRE_MAP[g]) for g in tags["genres"] if g in self.GENRE_MAP]
             if valid_genres:
                 params["with_genres"] = "|".join(valid_genres)
                 logging.info(f"添加类型筛选: {tags['genres']} → IDs: {valid_genres}")
-        
+
         # ===== 处理情感关键词 =====
         if "emotion" in tags and isinstance(tags["emotion"], list):
             valid_emotions = [self.EMOTION_MAP[e] for e in tags["emotion"] if e in self.EMOTION_MAP]
@@ -414,7 +413,7 @@ class MovieRecommender:
                 # 添加到参数中
                 params["with_keywords"] = keyword_str
                 logging.info(f"添加情感关键词筛选: {tags['emotion']} → {keyword_str}")
-        
+
         # ===== 处理主题关键词 =====
         if "keywords" in tags and isinstance(tags["keywords"], list):
             valid_keywords = [self.KEYWORD_CATEGORY_MAP[k] for k in tags["keywords"] if k in self.KEYWORD_CATEGORY_MAP]
@@ -422,20 +421,20 @@ class MovieRecommender:
                 # 添加到参数中
                 params["with_keywords"] = params.get("with_keywords", "") + "," + ",".join(valid_keywords)
                 logging.info(f"添加主题关键词筛选: {tags['keywords']} → {valid_keywords}")
-        
+
         # ===== 处理排除要求 =====
         if "exclude" in tags and isinstance(tags["exclude"], list):
             # 排除恐怖元素
             if "恐怖" in tags["exclude"]:
                 params["without_keywords"] = "horror,terror"
                 logging.info("排除恐怖元素")
-            
+
             # 排除暴力元素
             if "暴力" in tags["exclude"]:
                 params["certification_country"] = "US"
                 params["certification.lte"] = "PG-13"
                 logging.info("排除暴力元素（限制为PG-13级）")
-        
+
         # ===== 时间范围映射 =====
         if "time_range" in tags:
             try:
@@ -445,7 +444,7 @@ class MovieRecommender:
                 logging.info(f"添加时间筛选: {start_date} 至 {end_date}")
             except:
                 logging.warning(f"无效的时间范围格式: {tags.get('time_range', '')}")
-        
+
         # ===== 导演筛选映射 =====
         if "directors" in tags:
             director_ids = []
@@ -461,13 +460,13 @@ class MovieRecommender:
                         logging.warning(f"未找到导演: {director_name}")
                 except Exception as e:
                     logging.error(f"查询导演失败: {director_name} - {str(e)}")
-            
+
             if director_ids:
                 params["with_crew"] = ",".join(director_ids)
                 logging.info(f"添加导演筛选: {tags['directors']} → IDs: {director_ids}")
             else:
                 logging.warning("无有效导演ID")
-        
+
         # ===== 演员筛选映射 =====
         if "actors" in tags:
             actor_ids = []
@@ -478,7 +477,7 @@ class MovieRecommender:
                         actor_ids.append(str(actor_name))
                         logging.debug(f"使用演员ID: {actor_name}")
                         continue
-                    
+
                     search_url = f"https://api.themoviedb.org/3/search/person?api_key={self.TMDB_API_KEY}&query={actor_name}&language=zh-CN"
                     search_res = requests.get(search_url, timeout=8)
                     if search_res.status_code == 200 and search_res.json()["results"]:
@@ -489,35 +488,36 @@ class MovieRecommender:
                         logging.warning(f"未找到演员: {actor_name}")
                 except Exception as e:
                     logging.error(f"查询演员失败: {actor_name} - {str(e)}")
-            
+
             if actor_ids:
                 params["with_cast"] = ",".join(actor_ids)
                 logging.info(f"添加演员筛选: {tags['actors']} → IDs: {actor_ids}")
             else:
                 logging.warning("无有效演员ID")
-        
+
         # ===== 确保基本筛选条件 =====
         # 如果没有设置任何筛选条件，添加默认条件避免过多结果
         if not any(key in params for key in ["with_genres", "with_keywords", "with_crew", "with_cast"]):
             logging.info("无有效筛选条件，添加默认类型筛选")
             params["with_genres"] = "18"  # 默认剧情片
-        
+
         # 添加最小投票数限制，避免冷门电影
         params["vote_count.gte"] = 100
-        
+
         logging.info(f"最终TMDB参数: {params}")
         return params
 
     def search_tmdb_movies(self, params, max_attempts=3):
         """带多级回退的TMDB搜索"""
         movies = []
-        
+
         for attempt in range(1, max_attempts + 1):
             try:
                 # 为当前尝试生成参数
-                current_params = self.map_to_tmdb_params({}, attempt) if not params else self.map_to_tmdb_params(params, attempt)
+                current_params = self.map_to_tmdb_params({}, attempt) if not params else self.map_to_tmdb_params(params,
+                                                                                                                 attempt)
                 logging.info(f"搜索尝试 #{attempt} 参数: {current_params}")
-                
+
                 response = requests.get(
                     "https://api.themoviedb.org/3/discover/movie",
                     params=current_params,
@@ -525,19 +525,19 @@ class MovieRecommender:
                 )
                 response.raise_for_status()
                 data = response.json()
-                
+
                 results = data.get("results", [])
                 total_results = data.get("total_results", 0)
                 logging.info(f"找到 {total_results} 条结果 (尝试 #{attempt})")
-                
+
                 if results:
                     # 确保有足够的电影用于精排
                     min_results = max(20, min(30, total_results))
                     return results[:min_results]
-                
+
             except requests.exceptions.RequestException as e:
                 logging.error(f"TMDB API错误 (尝试 #{attempt}): {str(e)}")
-        
+
         # 所有尝试都失败时返回热门外语片
         logging.warning("所有尝试失败，返回热门电影作为后备")
         backup_params = {
@@ -557,18 +557,19 @@ class MovieRecommender:
         """使用DeepSeek对召回结果进行精排（为每部电影生成个性化理由）"""
         if not movies:
             return movies  # 无结果时直接返回
-        
+
         try:
             # 准备电影摘要信息
             movie_summaries = []
             for i, movie in enumerate(movies, 1):
                 title = movie.get("title", "未知电影")
                 year = movie.get("release_date", "年份未知")[:4] if movie.get("release_date") else "年份未知"
-                genres = ", ".join([name for genre_id in movie.get("genre_ids", []) 
-                                  for name, id_val in self.GENRE_MAP.items() if id_val == genre_id][:2])
+                genres = ", ".join([name for genre_id in movie.get("genre_ids", [])
+                                    for name, id_val in self.GENRE_MAP.items() if id_val == genre_id][:2])
                 overview = movie.get("overview", "暂无简介")
-                movie_summaries.append(f"{i}. {title} ({year}) - {genres} | {overview[:70]}{'...' if len(overview) > 70 else ''}")
-            
+                movie_summaries.append(
+                    f"{i}. {title} ({year}) - {genres} | {overview[:70]}{'...' if len(overview) > 70 else ''}")
+
             # 准备用户画像信息
             profile_info = []
             if user_profile["gender"] != "未知":
@@ -577,9 +578,9 @@ class MovieRecommender:
                 profile_info.append(f"年龄段: {user_profile['age_group']}")
             if user_profile["fav_genres"]:
                 profile_info.append(f"喜欢的类型: {', '.join(user_profile['fav_genres'])}")
-            
+
             profile_str = " | ".join(profile_info) if profile_info else "无额外信息"
-            
+
             # 构建精排提示词 - 要求为每部电影生成个性化理由
             prompt = f"""
     ## 用户需求
@@ -617,7 +618,7 @@ class MovieRecommender:
     }}
     请确保输出完整JSON结构，包含所有电影编号的推荐理由。
     """
-            
+
             response = self.openai_client.chat.completions.create(
                 model="qwen-plus",
                 messages=[
@@ -628,31 +629,31 @@ class MovieRecommender:
                 max_tokens=800,  # 增加token限额
                 response_format={"type": "json_object"}
             )
-            
+
             ranking_data = json.loads(response.choices[0].message.content)
             logging.info(f"精排结果: {ranking_data}")
-            
+
             # 处理精排结果
-            top_ids = [int(i)-1 for i in ranking_data["top5"][:5]]
+            top_ids = [int(i) - 1 for i in ranking_data["top5"][:5]]
             ranked_movies = []
-            
+
             # 为每部电影添加个性化理由
             for idx, movie_id in enumerate(top_ids):
                 if movie_id < len(movies):
                     movie = movies[movie_id]
                     # 从reasons对象中获取该电影编号的专属理由
-                    reason_key = str(len(ranked_movies)+1)
+                    reason_key = str(len(ranked_movies) + 1)
                     reason_text = ranking_data.get("reasons", {}).get(reason_key, "深度匹配您的观影偏好")
                     movie["recommendation_reason"] = reason_text
-                    movie["ranking_position"] = idx+1
+                    movie["ranking_position"] = idx + 1
                     ranked_movies.append(movie)
-            
+
             # 添加整体推荐思路
             if ranked_movies:
                 ranked_movies[0]["overall_reason"] = ranking_data.get("overall_reason", "")
-            
+
             return ranked_movies
-        
+
         except Exception as e:
             logging.error(f"精排过程失败: {str(e)}")
             # 失败时返回原列表的前5部
@@ -661,11 +662,11 @@ class MovieRecommender:
     def merge_profile_with_tags(self, profile, tags):
         """
         将用户画像与动态需求标签合并
-        
+
         参数:
         profile: 用户画像字典
         tags: 从用户查询中解析出的动态标签
-        
+
         返回:
         合并后的完整标签字典
         """
@@ -679,49 +680,49 @@ class MovieRecommender:
             "directors": [],
             "actors": []
         }
-        
+
         # 合并基本标签（保留查询中的原始标签）
         for key in merged_tags:
             if key in tags:
                 merged_tags[key] = tags[key] if isinstance(tags[key], list) else [tags[key]]
-        
+
         # ===== 合并用户喜欢的类型 =====
         if "fav_genres" in profile and profile["fav_genres"]:
             # 去重添加，最多保留3种
             for genre in profile["fav_genres"][:3]:
                 if genre not in merged_tags["genres"]:
                     merged_tags["genres"].append(genre)
-        
+
         # ===== 基于年龄组的处理 =====
         age_group = profile.get("age_group", "未知")
         gender = profile.get("gender", "未知")
-        
+
         if age_group == "儿童":
             # 儿童推荐偏好
             merged_tags["genres"].extend(["动画", "家庭"])
             merged_tags["keywords"].extend(["成长", "友谊", "教育"])
             merged_tags["emotion"].extend(["欢乐", "轻松", "温馨"])
             merged_tags["exclude"].extend(["恐怖", "暴力", "惊悚"])
-            
+
         elif age_group in ["青少年", "青年"]:
             # 青少年/青年推荐偏好
             merged_tags["keywords"].extend(["成长", "校园", "爱情", "自我发现"])
             if "科幻" not in merged_tags["genres"]:
                 merged_tags["genres"].append("科幻")
-            
+
         elif age_group in ["25-35", "35-45"]:
             # 成年人推荐偏好
             merged_tags["keywords"].extend(["事业", "家庭", "责任", "人生选择"])
             if "剧情" not in merged_tags["genres"]:
                 merged_tags["genres"].append("剧情")
-            
+
         elif age_group in ["45-60", "60+"]:
             # 中老年推荐偏好
             merged_tags["keywords"].extend(["回忆", "人生", "家庭", "历史"])
             merged_tags["emotion"].extend(["深刻", "怀旧"])
             if "历史" not in merged_tags["genres"]:
                 merged_tags["genres"].append("历史")
-        
+
         # ===== 基于性别的处理 =====
         if gender == "女":
             # 女性用户偏好
@@ -729,14 +730,14 @@ class MovieRecommender:
                 merged_tags["genres"].append("爱情")
             merged_tags["keywords"].extend(["情感", "关系", "成长"])
             merged_tags["emotion"].extend(["温馨", "治愈"])
-            
+
         elif gender == "男":
             # 男性用户偏好
             if "动作" not in merged_tags["genres"]:
                 merged_tags["genres"].append("动作")
             merged_tags["keywords"].extend(["冒险", "英雄", "技术"])
             merged_tags["emotion"].extend(["惊险", "震撼"])
-        
+
         # ===== 智能冲突解决 =====
         # 1. 解决情感冲突（如同时要求"悲伤"和"欢乐"）
         if "悲伤" in merged_tags["emotion"] and "欢乐" in merged_tags["emotion"]:
@@ -745,7 +746,7 @@ class MovieRecommender:
                 merged_tags["emotion"].remove("欢乐")
             else:
                 merged_tags["emotion"].remove("悲伤")
-        
+
         # 2. 解决类型冲突（如同时要求"恐怖"和"家庭"）
         if "恐怖" in merged_tags["genres"] and "家庭" in merged_tags["genres"]:
             # 根据年龄组决定保留哪个
@@ -755,7 +756,7 @@ class MovieRecommender:
             else:
                 # 为成人用户保留两者但添加提示
                 merged_tags["keywords"].append("家庭恐怖")  # 特殊类型
-        
+
         # 3. 排除项处理 - 确保排除项与内容不冲突
         for exclude_item in merged_tags["exclude"]:
             if exclude_item in merged_tags["genres"]:
@@ -764,7 +765,7 @@ class MovieRecommender:
                 merged_tags["keywords"].remove(exclude_item)
             if exclude_item in merged_tags["emotion"]:
                 merged_tags["emotion"].remove(exclude_item)
-        
+
         # ===== 限制标签数量 =====
         # 类型最多5种
         merged_tags["genres"] = list(set(merged_tags["genres"]))[:5]
@@ -774,10 +775,10 @@ class MovieRecommender:
         merged_tags["keywords"] = list(set(merged_tags["keywords"]))[:5]
         # 排除项最多3个
         merged_tags["exclude"] = list(set(merged_tags["exclude"]))[:3]
-        
+
         # 日志记录合并结果
         logging.info(f"合并后的推荐标签: {merged_tags}")
-        
+
         return merged_tags
 
     def get_movie_details(self, movie_title):
@@ -788,18 +789,18 @@ class MovieRecommender:
             search_res = requests.get(search_url, timeout=10)
             if search_res.status_code != 200 or not search_res.json().get("results"):
                 return None
-            
+
             # 取第一个匹配结果
             movie_id = search_res.json()["results"][0]["id"]
-            
+
             # 获取详细信息
             detail_url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={self.TMDB_API_KEY}&language=zh-CN&append_to_response=credits,recommendations"
             detail_res = requests.get(detail_url, timeout=10)
             if detail_res.status_code != 200:
                 return None
-            
+
             movie_data = detail_res.json()
-            
+
             # 提取导演（含ID）
             directors = []
             for crew in movie_data.get("credits", {}).get("crew", []):
@@ -810,7 +811,7 @@ class MovieRecommender:
                     })
                     if len(directors) >= 2:  # 最多两位导演
                         break
-            
+
             # 提取主演（含ID）
             actors = []
             for cast in movie_data.get("credits", {}).get("cast", []):
@@ -820,13 +821,13 @@ class MovieRecommender:
                 })
                 if len(actors) >= 3:  # 最多三位主演
                     break
-            
+
             # 提取关键词ID
             keyword_ids = [kw["id"] for kw in movie_data.get("keywords", {}).get("keywords", [])]
-            
+
             # 提取类似电影
             similar_movies = [movie["title"] for movie in movie_data.get("recommendations", {}).get("results", [])[:5]]
-            
+
             return {
                 "title": movie_data.get("title", "未知电影"),
                 "original_title": movie_data.get("original_title", ""),
@@ -889,20 +890,20 @@ class MovieRecommender:
         """格式化搜索结果（带个性化推荐理由）"""
         if not movies:
             return "暂时没有找到完全匹配的电影，但为您推荐以下热门影片：\n* 请尝试更具体的描述（如'浪漫喜剧'或'温馨剧情片'）"
-        
+
         formatted = "为您精选的Top5推荐："
-        
+
         # 添加整体推荐思路（只在第一名显示）
         if movies and "overall_reason" in movies[0]:
             formatted += f"\n\n💡💡 推荐思路: {movies[0]['overall_reason']}\n"
-        
+
         for i, movie in enumerate(movies, 1):
             title = movie.get("title", "未知电影")
             year = movie.get("release_date", "年份未知")[:4] if movie.get("release_date") else "年份未知"
             rating = movie.get("vote_average", 0)
             overview = movie.get("overview", "暂无简介")
             reason = movie.get("recommendation_reason", "深度匹配您的观影偏好")
-            
+
             # 处理类型
             genre_names = []
             if "genre_ids" in movie:
@@ -914,21 +915,21 @@ class MovieRecommender:
                     # 最多显示2个类型
                     if len(genre_names) >= 2:
                         break
-            
+
             formatted += f"\n\n🏆🏆 {i}. **{title}** ({year}) ⭐⭐{rating:.1f}"
             if genre_names:
                 formatted += f" | {', '.join(genre_names)}"
             formatted += f"\n🎯🎯 推荐理由: {reason}"
             formatted += f"\n📝📝 简介: {overview[:80]}{'...' if len(overview) > 80 else ''}"
-        
+
         return formatted
-    
+
     def get_daily_recommendations(self, count=5):
         """获取每日推荐电影（随机热映电影）
-        
+
         参数:
             count: 推荐电影数量(3-5部)
-        
+
         返回:
             list: 包含电影详情的字典列表
         """
@@ -941,12 +942,12 @@ class MovieRecommender:
                 "region": "CN",  # 中国地区
                 "page": 1
             }
-            
+
             response = requests.get(url, params=params, timeout=10)
             response.raise_for_status()
             data = response.json()
             movies = data.get("results", [])
-            
+
             if not movies:
                 logging.warning("未找到热映电影，使用热门电影替代")
                 backup_params = {
@@ -961,11 +962,11 @@ class MovieRecommender:
                     params=backup_params
                 ).json()
                 movies = backup_response.get("results", [])
-            
+
             # 随机选择指定数量的电影
             count = min(max(3, count), 5)  # 确保在3-5之间
             selected_movies = random.sample(movies, min(count, len(movies)))
-            
+
             # 获取每部电影的详细信息
             detailed_movies = []
             for movie in selected_movies:
@@ -973,9 +974,9 @@ class MovieRecommender:
                 detailed_movie = self.get_movie_details_by_id(movie_id)
                 if detailed_movie:
                     detailed_movies.append(detailed_movie)
-            
+
             return detailed_movies
-        
+
         except Exception as e:
             logging.error(f"每日推荐失败: {str(e)}")
             return []
@@ -990,11 +991,11 @@ class MovieRecommender:
                 "language": "zh-CN",
                 "append_to_response": "credits,keywords,images"
             }
-            
+
             response = requests.get(detail_url, params=params, timeout=10)
             response.raise_for_status()
             movie_data = response.json()
-            
+
             # 提取导演信息
             directors = []
             for crew in movie_data.get("credits", {}).get("crew", []):
@@ -1002,28 +1003,28 @@ class MovieRecommender:
                     directors.append(crew["name"])
                     if len(directors) >= 2:  # 最多两位导演
                         break
-            
+
             # 提取主演信息
             actors = []
             for cast in movie_data.get("credits", {}).get("cast", []):
                 actors.append(cast["name"])
                 if len(actors) >= 3:  # 最多三位主演
                     break
-            
+
             # 获取经典台词
             tagline = movie_data.get("tagline", "")
             if not tagline:
                 # 使用大模型生成台词
                 tagline = self.generate_movie_tagline(movie_data["title"], movie_data["overview"])
-            
+
             # 获取海报路径
             poster_path = movie_data.get("poster_path", "")
             poster_url = f"https://image.tmdb.org/t/p/w500{poster_path}" if poster_path else ""
-            
+
             # 获取背景图
             backdrop_path = movie_data.get("backdrop_path", "")
             backdrop_url = f"https://image.tmdb.org/t/p/original{backdrop_path}" if backdrop_path else ""
-            
+
             return {
                 "id": movie_id,
                 "title": movie_data.get("title", "未知电影"),
@@ -1039,7 +1040,7 @@ class MovieRecommender:
                 "backdrop_url": backdrop_url,  # 背景图URL
                 "genres": [genre["name"] for genre in movie_data.get("genres", [])]
             }
-        
+
         except Exception as e:
             logging.error(f"获取电影详情失败(ID:{movie_id}): {str(e)}")
             return None
@@ -1048,7 +1049,7 @@ class MovieRecommender:
         """使用大模型生成电影经典台词"""
         try:
             prompt = f"电影《{title}》的简介是：{overview[:100]}... 请为这部电影生成一句10-15字的中文经典台词（类似电影海报上的标语），直接输出台词内容不要添加其他文字"
-            
+
             response = self.openai_client.chat.completions.create(
                 model="qwen-plus",
                 messages=[
@@ -1058,14 +1059,13 @@ class MovieRecommender:
                 temperature=0.8,
                 max_tokens=30
             )
-            
+
             tagline = response.choices[0].message.content.strip()
             # 清理多余引号
             tagline = re.sub(r'^["\']|["\']$', '', tagline)
             return tagline
-        
+
         except Exception as e:
             logging.error(f"生成电影台词失败: {str(e)}")
             return "一部值得铭记的佳作"  # 默认台词
-        
-    
+

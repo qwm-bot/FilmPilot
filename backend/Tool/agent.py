@@ -5,18 +5,18 @@ from Tool.core import MovieRecommender
 from typing import Dict, Any
 from langchain_core.tools import tool
 
-def create_movie_agent(user_profile: Dict[str, Any] = None, openai_api_key: str = None,user_id: str = "default") -> Any:
+def create_movie_agent(user_profile: Dict[str, Any] = None, openai_api_key: str = None):
     """
     创建电影推荐Agent
-    
+
     参数:
     user_profile: 用户画像字典
     openai_api_key: 用于LangChain的OpenAI API密钥
-    
+
     返回:
     配置好的LangChain Agent
     """
-    recommender = MovieRecommender(user_profile=user_profile, qwen_api_key=openai_api_key,user_id=user_id)
+    recommender = MovieRecommender(user_profile=user_profile, qwen_api_key=openai_api_key)
     tools = [
         MovieRecommendationTool(recommender=recommender),
         MovieDetailTool(recommender=recommender)
@@ -39,11 +39,11 @@ def create_movie_agent(user_profile: Dict[str, Any] = None, openai_api_key: str 
 def run_movie_agent(agent, query: str) -> str:
     """
     使用Agent处理查询
-    
+
     参数:
     agent: 创建的电影推荐Agent
     query: 用户查询文本
-    
+
     返回:
     Agent的响应结果
     """
@@ -90,7 +90,7 @@ if __name__ == "__main__":
         "《流浪地球2》的导演和主演是谁？",
         "推荐克里斯托弗·诺兰导演的电影"
     ]
-    
+
     for query in test_queries:
         print(f"\n{'='*50}")
         print(f"用户查询: {query}")
