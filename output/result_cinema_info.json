@@ -1,0 +1,122 @@
+{
+  "data": {
+    "movie": {
+      "availableEpisodes": 0,
+      "awardUrl": "",
+      "backgroundColor": "#1D4040",
+      "bingeWatch": 0,
+      "bingeWatchst": 0,
+      "cat": "剧情,悬疑",
+      "comScorePersona": true,
+      "commented": false,
+      "dir": "来牧宽,姚文逸",
+      "distributions": [
+        {
+          "movieScoreLevel": "9-10分",
+          "proportion": "88.83"
+        },
+        {
+          "movieScoreLevel": "5-8分",
+          "proportion": "9.69"
+        },
+        {
+          "movieScoreLevel": "1-4分",
+          "proportion": "1.48"
+        }
+      ],
+      "dra": "影片围绕滨江三院一起离奇坠楼案展开，媒体人叶攀第一时间到达凶案现场。在秘密调查中，她先后发现死者母亲尤茜和坠楼护士李悦均有不同程度的嫌疑，并立刻将其作为独家消息曝光。而随着案件的推进，事态完全失控，“恶意”的漩涡吞噬一切，无人幸免……",
+      "dur": 100,
+      "egg": true,
+      "enm": "Malice",
+      "episodeDur": 0,
+      "episodes": 0,
+      "filmAlias": "真相,恶女,恶女阿尤",
+      "fra": "美国,加拿大,澳大利亚,新西兰,马来西亚,新加坡,中国香港,中国澳门",
+      "frt": "2025-07-05 00:00:00,2025-07-05 00:00:00,2025-07-17 00:00:00,2025-07-17 00:00:00,2025-07-17 00:00:00,,,",
+      "ftime": ",,,,,2025,2025,2025",
+      "globalReleased": true,
+      "guideToWish": false,
+      "id": 1522834,
+      "img": "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334253e777e8b073e79e8411152a8c8b53.jpg?imageMogr2/quality/80",
+      "latestEpisode": 0,
+      "modcsSt": false,
+      "movieExtraVO": {
+        "envelope": {
+          "buttonContent": "云包场",
+          "schemaUrl": "maoyan://maoyan.com/mrn?mrn_biz=movie&mrn_entry=moviechannel-makeabook&mrn_component=moviechannel-makeabook&url=https%3A%2F%2Fm.maoyan.com%2Fcharter%2Fbooking%3Fid%3D149&tab=online&movieId=1522834"
+        }
+      },
+      "movieType": 0,
+      "multiPub": true,
+      "musicNum": 0,
+      "nm": "恶意",
+      "onSale": true,
+      "onlinePlay": false,
+      "orderSt": 0,
+      "oriLang": "国语",
+      "photos": [
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b75be9a13d6925cb0f16c49ac3b2795.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b75be9a13d6925cb22d58175bbc9e6c.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b75be9a13d6925cbad09ac3dbd4eab7.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b75be9a13d6925cb85322edeb00bf97.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b75be9a13d6925cbe0d7865cf01e620.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b75be9a13d693d69270b714d0c9293e.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b75be9a13d694ea9d52bdd0a49fcd00.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b75be9a13d694ea970aa88b88f597e7.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b75be9a13d694ea9ebdf2a8c039e73a.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b75be9a13d694ea92808fe240f7b414.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b75be9a13d694ea9b2985b251037cd0.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b75be9a13d69fcf44d384672143962e.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b73d6ea45be7a2191685d65dbc40617.jpeg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b73d66e3e32772a9b80ef2bb0745981.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b73d66e3e32772a9effe7cdcd499f9c.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b73d66e3e32772a901328e0708b5505.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b73d66e3e32772a9515cd46da96d6bc.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b73d66e3e32772a9d719d46292fdee4.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b73d66e3e32772a9f691a31978b94ec.jpg?imageMogr2/thumbnail/2500x2500%3E",
+        "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b73d66e3e32772a92d9bb8b21cc138d.jpg?imageMogr2/thumbnail/2500x2500%3E"
+      ],
+      "pn": 71,
+      "preScorePersona": false,
+      "proScore": 0.0,
+      "proScoreNum": 0,
+      "pubDate": 1751644800000,
+      "pubDesc": "2025-07-05 09:00中国大陆上映",
+      "rt": "2025-07-05",
+      "sc": 9.5,
+      "scm": "张小斐加入陈思诚悬疑宇宙！",
+      "scoreLabel": "猫眼购票评分",
+      "shareInfo": {
+        "channel": 1,
+        "content": "简介|影片围绕滨江三院一起离奇坠楼案展开，媒体人叶攀第一时间到达凶案现场。在秘密调查中，她先后发现死者母亲尤茜和坠楼护士李悦均有不同程度的嫌疑，并立刻将其作为独家消息曝光。而随着案件的推进，事态完全失控，“恶意”的漩涡吞噬一切，无人幸免……",
+        "img": "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334253e777e8b073e79e8411152a8c8b53.jpg?imageMogr2/quality/80",
+        "title": "《恶意》猫眼购票评分9.5，2025-07-05 09:00中国大陆上映",
+        "url": "https://m.maoyan.com/asgard/movie/1522834"
+      },
+      "shortComment": {
+        "content": "张小斐加入陈思诚悬疑宇宙！",
+        "location": 0
+      },
+      "showst": 3,
+      "snum": 35441,
+      "src": "中国大陆",
+      "star": "张小斐,梅婷,陈雨锶",
+      "trailerStyle": 0,
+      "type": 0,
+      "typeDesc": "电影",
+      "vd": "https://vod.pipi.cn/fec9203cvodtransbj1251246104/1172b66c5145403692059973744/v.f42905.mp4",
+      "ver": "CINITY 2D/中国巨幕2D",
+      "videoImg": "https://p0.pipi.cn/mediaplus/friday_image_fe/0fa334b7ea45c28457d7e46c6733c63c01223.png?imageMogr2/quality/80",
+      "videoName": "张小斐怒怼张子贤！电影《恶意》底线之争引发对峙高潮！",
+      "videourl": "https://vod.pipi.cn/fec9203cvodtransbj1251246104/1172b66c5145403692059973744/v.f42905.mp4",
+      "viewedSt": 0,
+      "vnum": 12,
+      "vodFreeSt": 0,
+      "vodPlay": false,
+      "vodSt": 0,
+      "watched": 5827311,
+      "wish": 90863,
+      "wishst": 0
+    }
+  }
+}

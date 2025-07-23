@@ -1,0 +1,1151 @@
+{
+  "code": 0,
+  "data": {
+    "cinemas": [
+      {
+        "addr": "静海区大邱庄镇团泊大道与长江道交口天街商业广场4号楼四层",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1803.0km",
+        "fullReduceTag": null,
+        "id": 41123,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "退",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          }
+        ],
+        "lat": 38.844288,
+        "lng": 117.07052,
+        "mark": 0,
+        "name": "星梦轻奢影城",
+        "poiId": 550898531,
+        "promotion": {
+          "cardPromotionTag": "",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [],
+        "referencePrice": "0",
+        "sellPrice": "38",
+        "shopId": 550898531,
+        "showTimes": "近期场次: 21:30",
+        "ticket_url": "https://www.maoyan.com/cinema/41123?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "静海区联盟大街惠民医院北侧（近静海第二中学）",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1810.6km",
+        "fullReduceTag": null,
+        "id": 967,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "退",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          }
+        ],
+        "lat": 38.94159,
+        "lng": 116.928505,
+        "mark": 0,
+        "name": "麦田国际影城",
+        "poiId": 1439093,
+        "promotion": {
+          "cardPromotionTag": "",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [],
+        "referencePrice": "50",
+        "sellPrice": "34.9",
+        "shopId": 4291047,
+        "showTimes": "近期场次: 21:00",
+        "ticket_url": "https://www.maoyan.com/cinema/967?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "滨海新区世纪大道118号迎宾超市3楼北侧",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1811.4km",
+        "fullReduceTag": null,
+        "id": 2647,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "退",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          }
+        ],
+        "lat": 38.84611,
+        "lng": 117.454704,
+        "mark": 0,
+        "name": "完美世界影城（天津迎宾店）",
+        "poiId": 1850279,
+        "promotion": {
+          "cardPromotionTag": "开卡特惠，首单2张票最高立减10元",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [
+          {
+            "content": "开卡特惠，首单2张票最高立减10元",
+            "icon": "",
+            "priority": 5,
+            "tag": "卡",
+            "tagColor": "#73C2F3",
+            "type": 0
+          }
+        ],
+        "referencePrice": "60",
+        "sellPrice": "29",
+        "shopId": 5510244,
+        "showTimes": "近期场次: 22:05",
+        "ticket_url": "https://www.maoyan.com/cinema/2647?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "滨海新区世纪大道东305号易品商业广场A区5层",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1812.0km",
+        "fullReduceTag": null,
+        "id": 16649,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "退",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "IMAX厅",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "杜比全景声厅",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "4K厅",
+            "url": ""
+          }
+        ],
+        "lat": 38.84502,
+        "lng": 117.48886,
+        "mark": 0,
+        "name": "金逸影城（大港IMAX店）",
+        "poiId": 131327444,
+        "promotion": {
+          "cardPromotionTag": "",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [],
+        "referencePrice": "0",
+        "sellPrice": "32.9",
+        "shopId": 76744503,
+        "showTimes": "近期场次: 20:55 | 22:20",
+        "ticket_url": "https://www.maoyan.com/cinema/16649?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "滨海新区古林街道港东六道与海景七路交口和兴万乐汇3层中部(和兴万乐汇1层和兴集团门口东临客厅上3层即到)",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1813.5km",
+        "fullReduceTag": null,
+        "id": 26487,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "退",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "杜比全景声厅",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "巨幕厅",
+            "url": ""
+          }
+        ],
+        "lat": 38.857246,
+        "lng": 117.495865,
+        "mark": 0,
+        "name": "新影联长天影城（大港店）",
+        "poiId": 190900055,
+        "promotion": {
+          "cardPromotionTag": "",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [],
+        "referencePrice": "0",
+        "sellPrice": "33",
+        "shopId": 128079963,
+        "showTimes": "近期场次: 21:40",
+        "ticket_url": "https://www.maoyan.com/cinema/26487?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "静海区团泊大道与体育大道交汇处团泊启彩奥莱团泊健康城乐动港一层A1-2",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1817.2km",
+        "fullReduceTag": null,
+        "id": 40942,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "退",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "DTS:X 临境音厅",
+            "url": ""
+          }
+        ],
+        "lat": 38.972927,
+        "lng": 117.08915,
+        "mark": 0,
+        "name": "星博国际影城（团泊店）",
+        "poiId": 1967291904,
+        "promotion": {
+          "cardPromotionTag": "",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [],
+        "referencePrice": "0",
+        "sellPrice": "33",
+        "shopId": 1967291904,
+        "showTimes": "近期场次: 21:50",
+        "ticket_url": "https://www.maoyan.com/cinema/40942?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "津南区小站镇舜新城市广场三楼",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1818.8km",
+        "fullReduceTag": null,
+        "id": 24230,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "退",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          }
+        ],
+        "lat": 38.918972,
+        "lng": 117.43677,
+        "mark": 0,
+        "name": "星宇国际影城（舜新城市广场店）",
+        "poiId": 163541630,
+        "promotion": {
+          "cardPromotionTag": "",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [],
+        "referencePrice": "0",
+        "sellPrice": "38",
+        "shopId": 96706613,
+        "showTimes": "近期场次: 20:45",
+        "ticket_url": "https://www.maoyan.com/cinema/24230?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "津南区八里台镇建鑫城鑫河湾广场1号楼四层",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1819.2km",
+        "fullReduceTag": null,
+        "id": 24027,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "退",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          }
+        ],
+        "lat": 38.944813,
+        "lng": 117.32526,
+        "mark": 0,
+        "name": "LFC传奇电影中心（津南店）",
+        "poiId": 161882772,
+        "promotion": {
+          "cardPromotionTag": "",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [],
+        "referencePrice": "0",
+        "sellPrice": "33.8",
+        "shopId": 95247483,
+        "showTimes": "近期场次: 21:35",
+        "ticket_url": "https://www.maoyan.com/cinema/24027?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "津南区小站镇怡润轩18号楼三层金角影城",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1820.3km",
+        "fullReduceTag": null,
+        "id": 16903,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "退",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          }
+        ],
+        "lat": 38.931065,
+        "lng": 117.44394,
+        "mark": 0,
+        "name": "金角国际影城（福乐汇商业步行街店）",
+        "poiId": 150538761,
+        "promotion": {
+          "cardPromotionTag": "",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [],
+        "referencePrice": "0",
+        "sellPrice": "33",
+        "shopId": 77448461,
+        "showTimes": "近期场次: 21:25",
+        "ticket_url": "https://www.maoyan.com/cinema/16903?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "津南区南环路与二八线交叉口津南吾悦广场四层Z17号",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1823.8km",
+        "fullReduceTag": null,
+        "id": 27943,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "退",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          }
+        ],
+        "lat": 38.97769,
+        "lng": 117.374374,
+        "mark": 0,
+        "name": "星轶STARX影城（津南吾悦广场旗舰店）",
+        "poiId": 1577603913,
+        "promotion": {
+          "cardPromotionTag": "开卡特惠，首单1张票最高立减6元",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [
+          {
+            "content": "开卡特惠，首单1张票最高立减6元",
+            "icon": "",
+            "priority": 5,
+            "tag": "卡",
+            "tagColor": "#73C2F3",
+            "type": 0
+          }
+        ],
+        "referencePrice": "0",
+        "sellPrice": "55.9",
+        "shopId": 1577603913,
+        "showTimes": "近期场次: 22:20",
+        "ticket_url": "https://www.maoyan.com/cinema/27943?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "西青区张家窝镇枫雅道枫雅印象城3F-52号",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1824.8km",
+        "fullReduceTag": null,
+        "id": 39425,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "退",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          }
+        ],
+        "lat": 39.053925,
+        "lng": 117.02907,
+        "mark": 0,
+        "name": "横店电影城（枫雅印象城店）",
+        "poiId": 762219076,
+        "promotion": {
+          "cardPromotionTag": "开卡特惠，首单1张票最高立减6.6元",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [
+          {
+            "content": "开卡特惠，首单1张票最高立减6.6元",
+            "icon": "",
+            "priority": 5,
+            "tag": "卡",
+            "tagColor": "#73C2F3",
+            "type": 0
+          }
+        ],
+        "referencePrice": "0",
+        "sellPrice": "34.9",
+        "shopId": 762219076,
+        "showTimes": "近期场次: 21:50",
+        "ticket_url": "https://www.maoyan.com/cinema/39425?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "西青区张家窝镇知景道321号社会山广场2号楼",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1825.1km",
+        "fullReduceTag": null,
+        "id": 24688,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "IMAX厅",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "4DX厅",
+            "url": ""
+          }
+        ],
+        "lat": 39.052845,
+        "lng": 117.050385,
+        "mark": 0,
+        "name": "万达影城（西青社会山IMAX店）",
+        "poiId": 165121594,
+        "promotion": {
+          "cardPromotionTag": "开卡特惠，首单1张票最高立减6元",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [
+          {
+            "content": "开卡特惠，首单1张票最高立减6元",
+            "icon": "",
+            "priority": 5,
+            "tag": "卡",
+            "tagColor": "#73C2F3",
+            "type": 0
+          }
+        ],
+        "referencePrice": "0",
+        "sellPrice": "35",
+        "shopId": 98208826,
+        "showTimes": "近期场次: 22:30 | 23:55",
+        "ticket_url": "https://www.maoyan.com/cinema/24688?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "西青区津港公路与兴华道交口西青万达广场4楼4F-A",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1825.3km",
+        "fullReduceTag": null,
+        "id": 38383,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          }
+        ],
+        "lat": 39.018944,
+        "lng": 117.2373,
+        "mark": 0,
+        "name": "万达影城（西青万达激光店）",
+        "poiId": 1978897067,
+        "promotion": {
+          "cardPromotionTag": "开卡特惠，首单1张票最高立减6元",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [
+          {
+            "content": "开卡特惠，首单1张票最高立减6元",
+            "icon": "",
+            "priority": 5,
+            "tag": "卡",
+            "tagColor": "#73C2F3",
+            "type": 0
+          }
+        ],
+        "referencePrice": "0",
+        "sellPrice": "40",
+        "shopId": 1978897067,
+        "showTimes": "近期场次: 21:00 | 21:35",
+        "ticket_url": "https://www.maoyan.com/cinema/38383?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "津南区建国大街新华城市广场3层",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1825.6km",
+        "fullReduceTag": null,
+        "id": 26110,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "杜比全景声厅",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "巨幕厅",
+            "url": ""
+          }
+        ],
+        "lat": 38.991196,
+        "lng": 117.392044,
+        "mark": 0,
+        "name": "乐奇国际影城（天津店）",
+        "poiId": 189249226,
+        "promotion": {
+          "cardPromotionTag": "开卡特惠，首单1张票最高立减5元",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [
+          {
+            "content": "开卡特惠，首单1张票最高立减5元",
+            "icon": "",
+            "priority": 5,
+            "tag": "卡",
+            "tagColor": "#73C2F3",
+            "type": 0
+          }
+        ],
+        "referencePrice": "0",
+        "sellPrice": "36",
+        "shopId": 126546588,
+        "showTimes": "近期场次: 21:20 | 22:20",
+        "ticket_url": "https://www.maoyan.com/cinema/26110?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "西青区友谊南路111号永旺梦乐城3层",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1825.6km",
+        "fullReduceTag": null,
+        "id": 8221,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "4K厅",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "60帧厅",
+            "url": ""
+          }
+        ],
+        "lat": 39.025883,
+        "lng": 117.218704,
+        "mark": 0,
+        "name": "CGV影城（梅江ScreenX店）",
+        "poiId": 4895550,
+        "promotion": {
+          "cardPromotionTag": "开卡特惠，首单1张票最高立减6.1元",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [
+          {
+            "content": "开卡特惠，首单1张票最高立减6.1元",
+            "icon": "",
+            "priority": 5,
+            "tag": "卡",
+            "tagColor": "#73C2F3",
+            "type": 0
+          }
+        ],
+        "referencePrice": "0",
+        "sellPrice": "39.9",
+        "shopId": 15089781,
+        "showTimes": "近期场次: 23:00",
+        "ticket_url": "https://www.maoyan.com/cinema/8221?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "河西区友谊南路梅江大岛商业广场4层",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1827.6km",
+        "fullReduceTag": null,
+        "id": 6818,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "退",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          }
+        ],
+        "lat": 39.04351,
+        "lng": 117.21909,
+        "mark": 0,
+        "name": "Movie Park 大岛影城",
+        "poiId": 3308066,
+        "promotion": {
+          "cardPromotionTag": "开卡赠礼，享家庭特惠观影",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [
+          {
+            "content": "开卡赠礼，享家庭特惠观影",
+            "icon": "",
+            "priority": 5,
+            "tag": "卡",
+            "tagColor": "#73C2F3",
+            "type": 0
+          }
+        ],
+        "referencePrice": "90",
+        "sellPrice": "38.5",
+        "shopId": 13904674,
+        "showTimes": "近期场次: 21:30",
+        "ticket_url": "https://www.maoyan.com/cinema/6818?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "西青区李七庄街武台村瑶琳路与雅乐道交汇处东北角大津城商业广场第四层",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1827.8km",
+        "fullReduceTag": null,
+        "id": 38795,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "退",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "LUXE巨幕厅",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "儿童厅",
+            "url": ""
+          }
+        ],
+        "lat": 39.054638,
+        "lng": 117.17215,
+        "mark": 0,
+        "name": "津城影院（LUXE巨幕大津城店）",
+        "poiId": 1896533437,
+        "promotion": {
+          "cardPromotionTag": "",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [],
+        "referencePrice": "0",
+        "sellPrice": "25",
+        "shopId": 1896533437,
+        "showTimes": "近期场次: 21:30 | 22:40",
+        "ticket_url": "https://www.maoyan.com/cinema/38795?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "河西区解放南路与渌水道交口东北侧中海天津环宇城购物中心四层401五层501",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1827.9km",
+        "fullReduceTag": null,
+        "id": 38750,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "退",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "杜比全景声厅",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "CINITY厅",
+            "url": ""
+          }
+        ],
+        "lat": 39.0437,
+        "lng": 117.234726,
+        "mark": 0,
+        "name": "完美世界影城（天津环宇城CINITY店）",
+        "poiId": 694612701,
+        "promotion": {
+          "cardPromotionTag": "开卡特惠，首单2张票最高立减10元",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [
+          {
+            "content": "开卡特惠，首单2张票最高立减10元",
+            "icon": "",
+            "priority": 5,
+            "tag": "卡",
+            "tagColor": "#73C2F3",
+            "type": 0
+          }
+        ],
+        "referencePrice": "0",
+        "sellPrice": "40",
+        "shopId": 694612701,
+        "showTimes": "近期场次: 22:00 | 23:00",
+        "ticket_url": "https://www.maoyan.com/cinema/38750?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "津南区辛庄镇津沽公路永旺梦乐购物中心3层",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1828.6km",
+        "fullReduceTag": null,
+        "id": 24219,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "影城卡",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "CGS中国巨幕厅",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "杜比全景声厅",
+            "url": ""
+          }
+        ],
+        "lat": 39.029327,
+        "lng": 117.3405,
+        "mark": 0,
+        "name": "中影国际影城（津南永旺店）",
+        "poiId": 163446241,
+        "promotion": {
+          "cardPromotionTag": "",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [],
+        "referencePrice": "0",
+        "sellPrice": "41",
+        "shopId": 96632112,
+        "showTimes": "近期场次: 21:50",
+        "ticket_url": "https://www.maoyan.com/cinema/24219?poi=None&movieId=1522834"
+      },
+      {
+        "addr": "西青区津门湖街丽江道6号龙湖梅江天街6层",
+        "cellShows": [],
+        "cityId": 40,
+        "distance": "1829.6km",
+        "fullReduceTag": null,
+        "id": 40320,
+        "labelResource": [],
+        "labels": [
+          {
+            "color": "#579daf",
+            "name": "退",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "改签",
+            "url": ""
+          },
+          {
+            "color": "#ff9900",
+            "name": "小吃",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "杜比全景声厅",
+            "url": ""
+          },
+          {
+            "color": "#579daf",
+            "name": "CINITY厅",
+            "url": ""
+          }
+        ],
+        "lat": 39.06444,
+        "lng": 117.20765,
+        "mark": 0,
+        "name": "沃美影城龙湖梅江天街店（CINITY LED）",
+        "poiId": 822813687,
+        "promotion": {
+          "cardPromotionTag": "",
+          "couponPromotionTag": "",
+          "merchantActivityTag": "",
+          "packShowActivityTag": "",
+          "platformActivityTag": "",
+          "starActivityTag": ""
+        },
+        "promotionTag": [],
+        "referencePrice": "0",
+        "sellPrice": "33.9",
+        "shopId": 822813687,
+        "showTimes": "近期场次: 22:40",
+        "ticket_url": "https://www.maoyan.com/cinema/40320?poi=None&movieId=1522834"
+      }
+    ],
+    "paging": {
+      "hasMore": true,
+      "limit": 20,
+      "offset": 0,
+      "total": 102
+    }
+  },
+  "errMsg": "",
+  "success": true
+}

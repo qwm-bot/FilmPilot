@@ -1,0 +1,17 @@
+{
+  "watching_time": "",
+  "gender": "",
+  "age_group": "",
+  "group_type": "",
+  "movie_genre": [
+    "悬疑"
+  ],
+  "favorite_actors": [],
+  "favorite_directors": [],
+  "location": "",
+  "emotion": "neutral",
+  "negative_genres": [],
+  "negative_actors": [],
+  "negative_directors": [],
+  "last_updated": "2025-07-22T09:26:37.699355"
+}

@@ -1,0 +1,328 @@
+[
+  {
+    "addr": "滨海新区大港油田幸福路与开发路交口幸福广场4楼",
+    "distance": "1798.6km",
+    "id": 6320,
+    "lat": 38.71959,
+    "lng": 117.490074,
+    "name": "完美世界影城（幸福广场店）",
+    "poiId": 2443717,
+    "sellPrice": "45.9",
+    "showTimes": "近期场次: 10:40 | 12:36 | 14:30",
+    "ticket_url": "https://www.maoyan.com/cinema/6320?poi=2443717&movieId=1522834",
+    "labels": []
+  },
+  {
+    "addr": "静海区大邱庄镇团泊大道与长江道交口天街商业广场4号楼四层",
+    "distance": "1803.0km",
+    "id": 41123,
+    "lat": 38.844288,
+    "lng": 117.07052,
+    "name": "星梦轻奢影城",
+    "poiId": 550898531,
+    "sellPrice": "38",
+    "showTimes": "近期场次: 10:50 | 12:40 | 14:30",
+    "ticket_url": "https://www.maoyan.com/cinema/41123?poi=550898531&movieId=1522834",
+    "labels": []
+  },
+  {
+    "addr": "静海区东方红路北侧、京福路东侧家世界商业广场三层星辰影院",
+    "distance": "1809.7km",
+    "id": 40687,
+    "lat": 38.93235,
+    "lng": 116.93287,
+    "name": "星辰影院(家世界店)",
+    "poiId": 590141196,
+    "sellPrice": "37.5",
+    "showTimes": "近期场次: 10:10 | 12:15 | 13:15",
+    "ticket_url": "https://www.maoyan.com/cinema/40687?poi=590141196&movieId=1522834",
+    "labels": []
+  },
+  {
+    "addr": "静海区胜利大街46号悦海食尚广场4楼",
+    "distance": "1809.8km",
+    "id": 14635,
+    "lat": 38.93502,
+    "lng": 116.922295,
+    "name": "今典国际影院（悦海食尚广场店）",
+    "poiId": 52374938,
+    "sellPrice": "35",
+    "showTimes": "近期场次: 12:10 | 14:10",
+    "ticket_url": "https://www.maoyan.com/cinema/14635?poi=52374938&movieId=1522834",
+    "labels": []
+  },
+  {
+    "addr": "静海区联盟大街惠民医院北侧（近静海第二中学）",
+    "distance": "1810.6km",
+    "id": 967,
+    "lat": 38.94159,
+    "lng": 116.928505,
+    "name": "麦田国际影城",
+    "poiId": 1439093,
+    "sellPrice": "34.9",
+    "showTimes": "近期场次: 10:40 | 12:40 | 14:35",
+    "ticket_url": "https://www.maoyan.com/cinema/967?poi=1439093&movieId=1522834",
+    "labels": []
+  },
+  {
+    "addr": "静海区东方红路168号新世纪商业楼301",
+    "distance": "1810.9km",
+    "id": 26252,
+    "lat": 38.935898,
+    "lng": 116.971565,
+    "name": "天津优加国际影城（新世纪购物中心店）",
+    "poiId": 189905046,
+    "sellPrice": "34.9",
+    "showTimes": "近期场次: 11:20 | 12:40 | 16:10",
+    "ticket_url": "https://www.maoyan.com/cinema/26252?poi=189905046&movieId=1522834",
+    "labels": []
+  },
+  {
+    "addr": "滨海新区世纪大道118号迎宾超市3楼北侧",
+    "distance": "1811.4km",
+    "id": 2647,
+    "lat": 38.84611,
+    "lng": 117.454704,
+    "name": "完美世界影城（天津迎宾店）",
+    "poiId": 1850279,
+    "sellPrice": "29",
+    "showTimes": "近期场次: 10:30 | 12:19 | 13:45",
+    "ticket_url": "https://www.maoyan.com/cinema/2647?poi=1850279&movieId=1522834",
+    "labels": []
+  },
+  {
+    "addr": "滨海新区世纪大道东305号易品商业广场A区5层",
+    "distance": "1812.0km",
+    "id": 16649,
+    "lat": 38.84502,
+    "lng": 117.48886,
+    "name": "金逸影城（大港IMAX店）",
+    "poiId": 131327444,
+    "sellPrice": "32.9",
+    "showTimes": "近期场次: 10:30 | 12:25 | 14:20",
+    "ticket_url": "https://www.maoyan.com/cinema/16649?poi=131327444&movieId=1522834",
+    "labels": [
+      {
+        "color": "#579daf",
+        "name": "IMAX厅",
+        "url": ""
+      },
+      {
+        "color": "#579daf",
+        "name": "杜比全景声厅",
+        "url": ""
+      },
+      {
+        "color": "#579daf",
+        "name": "4K厅",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "addr": "滨海新区古林街道港东六道与海景七路交口和兴万乐汇3层中部(和兴万乐汇1层和兴集团门口东临客厅上3层即到)",
+    "distance": "1813.5km",
+    "id": 26487,
+    "lat": 38.857246,
+    "lng": 117.495865,
+    "name": "新影联长天影城（大港店）",
+    "poiId": 190900055,
+    "sellPrice": "33",
+    "showTimes": "近期场次: 10:10 | 12:05 | 14:00",
+    "ticket_url": "https://www.maoyan.com/cinema/26487?poi=190900055&movieId=1522834",
+    "labels": [
+      {
+        "color": "#579daf",
+        "name": "杜比全景声厅",
+        "url": ""
+      },
+      {
+        "color": "#579daf",
+        "name": "巨幕厅",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "addr": "静海区团泊大道与体育大道交汇处团泊启彩奥莱团泊健康城乐动港一层A1-2",
+    "distance": "1817.2km",
+    "id": 40942,
+    "lat": 38.972927,
+    "lng": 117.08915,
+    "name": "星博国际影城（团泊店）",
+    "poiId": 1967291904,
+    "sellPrice": "24.9",
+    "showTimes": "近期场次: 09:50 | 11:45 | 14:45",
+    "ticket_url": "https://www.maoyan.com/cinema/40942?poi=1967291904&movieId=1522834",
+    "labels": [
+      {
+        "color": "#579daf",
+        "name": "DTS:X 临境音厅",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "addr": "津南区小站镇舜新城市广场三楼",
+    "distance": "1818.8km",
+    "id": 24230,
+    "lat": 38.918972,
+    "lng": 117.43677,
+    "name": "星宇国际影城（舜新城市广场店）",
+    "poiId": 163541630,
+    "sellPrice": "38",
+    "showTimes": "近期场次: 10:45 | 11:50 | 14:50",
+    "ticket_url": "https://www.maoyan.com/cinema/24230?poi=163541630&movieId=1522834",
+    "labels": []
+  },
+  {
+    "addr": "津南区八里台镇建鑫城鑫河湾广场1号楼四层",
+    "distance": "1819.2km",
+    "id": 24027,
+    "lat": 38.944813,
+    "lng": 117.32526,
+    "name": "LFC传奇电影中心（津南店）",
+    "poiId": 161882772,
+    "sellPrice": "33.8",
+    "showTimes": "近期场次: 12:35 | 14:30 | 18:55",
+    "ticket_url": "https://www.maoyan.com/cinema/24027?poi=161882772&movieId=1522834",
+    "labels": []
+  },
+  {
+    "addr": "津南区小站镇怡润轩18号楼三层金角影城",
+    "distance": "1820.3km",
+    "id": 16903,
+    "lat": 38.931065,
+    "lng": 117.44394,
+    "name": "金角国际影城（福乐汇商业步行街店）",
+    "poiId": 150538761,
+    "sellPrice": "33",
+    "showTimes": "近期场次: 12:40 | 14:20 | 19:00",
+    "ticket_url": "https://www.maoyan.com/cinema/16903?poi=150538761&movieId=1522834",
+    "labels": []
+  },
+  {
+    "addr": "津南区南环路与二八线交叉口津南吾悦广场四层Z17号",
+    "distance": "1823.8km",
+    "id": 27943,
+    "lat": 38.97769,
+    "lng": 117.374374,
+    "name": "星轶STARX影城（津南吾悦广场旗舰店）",
+    "poiId": 1577603913,
+    "sellPrice": "42.9",
+    "showTimes": "近期场次: 10:10 | 12:10 | 13:30",
+    "ticket_url": "https://www.maoyan.com/cinema/27943?poi=1577603913&movieId=1522834",
+    "labels": []
+  },
+  {
+    "addr": "西青区张家窝镇枫雅道枫雅印象城3F-52号",
+    "distance": "1824.8km",
+    "id": 39425,
+    "lat": 39.053925,
+    "lng": 117.02907,
+    "name": "横店电影城（枫雅印象城店）",
+    "poiId": 762219076,
+    "sellPrice": "34.9",
+    "showTimes": "近期场次: 11:00 | 12:50 | 14:45",
+    "ticket_url": "https://www.maoyan.com/cinema/39425?poi=762219076&movieId=1522834",
+    "labels": []
+  },
+  {
+    "addr": "西青区张家窝镇知景道321号社会山广场2号楼",
+    "distance": "1825.1km",
+    "id": 24688,
+    "lat": 39.052845,
+    "lng": 117.050385,
+    "name": "万达影城（西青社会山IMAX店）",
+    "poiId": 165121594,
+    "sellPrice": "35",
+    "showTimes": "近期场次: 11:50 | 16:00 | 22:30",
+    "ticket_url": "https://www.maoyan.com/cinema/24688?poi=165121594&movieId=1522834",
+    "labels": [
+      {
+        "color": "#579daf",
+        "name": "IMAX厅",
+        "url": ""
+      },
+      {
+        "color": "#579daf",
+        "name": "4DX厅",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "addr": "西青区津港公路与兴华道交口西青万达广场4楼4F-A",
+    "distance": "1825.3km",
+    "id": 38383,
+    "lat": 39.018944,
+    "lng": 117.2373,
+    "name": "万达影城（西青万达激光店）",
+    "poiId": 1978897067,
+    "sellPrice": "40",
+    "showTimes": "近期场次: 12:40 | 14:50 | 16:45",
+    "ticket_url": "https://www.maoyan.com/cinema/38383?poi=1978897067&movieId=1522834",
+    "labels": []
+  },
+  {
+    "addr": "津南区建国大街新华城市广场3层",
+    "distance": "1825.6km",
+    "id": 26110,
+    "lat": 38.991196,
+    "lng": 117.392044,
+    "name": "乐奇国际影城（天津店）",
+    "poiId": 189249226,
+    "sellPrice": "33",
+    "showTimes": "近期场次: 10:30 | 12:20 | 14:10",
+    "ticket_url": "https://www.maoyan.com/cinema/26110?poi=189249226&movieId=1522834",
+    "labels": [
+      {
+        "color": "#579daf",
+        "name": "杜比全景声厅",
+        "url": ""
+      },
+      {
+        "color": "#579daf",
+        "name": "巨幕厅",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "addr": "西青区友谊南路111号永旺梦乐城3层",
+    "distance": "1825.6km",
+    "id": 8221,
+    "lat": 39.025883,
+    "lng": 117.218704,
+    "name": "CGV影城（梅江ScreenX店）",
+    "poiId": 4895550,
+    "sellPrice": "39.9",
+    "showTimes": "近期场次: 10:25 | 12:20 | 16:40",
+    "ticket_url": "https://www.maoyan.com/cinema/8221?poi=4895550&movieId=1522834",
+    "labels": [
+      {
+        "color": "#579daf",
+        "name": "4K厅",
+        "url": ""
+      },
+      {
+        "color": "#579daf",
+        "name": "60帧厅",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "addr": "津南区双港镇禧悦时光三层星孚影城",
+    "distance": "1826.6km",
+    "id": 40904,
+    "lat": 39.02263,
+    "lng": 117.28167,
+    "name": "星孚影城（禧悦时光店）",
+    "poiId": 1000373526,
+    "sellPrice": "43",
+    "showTimes": "近期场次: 10:55 | 12:50",
+    "ticket_url": "https://www.maoyan.com/cinema/40904?poi=1000373526&movieId=1522834",
+    "labels": []
+  }
+]
